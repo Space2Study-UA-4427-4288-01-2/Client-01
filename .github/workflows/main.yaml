@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, 36-sonar-integration]
   pull_request:
     branches: [main, develop]
 
@@ -37,7 +37,7 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@master
         if: success() || failure()
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Test_Docker:
