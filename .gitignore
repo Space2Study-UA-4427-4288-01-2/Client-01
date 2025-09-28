@@ -11,6 +11,9 @@
 test-report.xml
 .scannerwork
 
+# lint
+eslint-report.json
+
 # production
 /build
 /build-story
