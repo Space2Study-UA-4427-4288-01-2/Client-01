@@ -18,7 +18,7 @@ describe('AppRange', () => {
     expect(snapshot.asFragment()).toMatchSnapshot()
   })
 
-  it('should renders correctly', () => {
+  it('should render inputs with value from props', () => {
     const [minInput, maxInput] = screen.getAllByRole('textbox')
 
     expect(minInput).toHaveValue('0')
@@ -26,7 +26,7 @@ describe('AppRange', () => {
   })
 
   describe('AppRange - slider interaction', () => {
-    it('should update call onChange handler when min slider is changed', async () => {
+    it('should call onChange handler when min slider is changed', async () => {
       const sliders = screen.getAllByRole('slider')
 
       fireEvent.change(sliders[0], { target: { value: 20 } })
@@ -36,7 +36,7 @@ describe('AppRange', () => {
       })
     })
 
-    it('should update call onChange handler when max slider is changed', async () => {
+    it('should call onChange handler when max slider is changed', async () => {
       const sliders = screen.getAllByRole('slider')
 
       fireEvent.change(sliders[1], { target: { value: 25 } })
@@ -53,32 +53,22 @@ describe('AppRange', () => {
       expect(inputs).toHaveLength(2)
     })
 
-    it('updates when input values are changed', async () => {
+    it('should call onChange handler after from input is changed', async () => {
       const inputs = screen.getAllByRole('textbox')
 
       fireEvent.change(inputs[0], { target: { value: '10' } })
 
       await waitFor(() => {
-        expect(handleChange).toHaveBeenCalled()
-        expect(inputs[0]).toHaveValue('10')
+        expect(handleChange).toHaveBeenCalledWith([10, 100])
       })
     })
 
-    it('should call onChange when first input is changed', async () => {
-      const inputs = screen.getAllByRole('textbox')
-      fireEvent.change(inputs[0], { target: { value: '10' } })
-
-      await waitFor(() => {
-        expect(handleChange).toHaveBeenCalled()
-      })
-    })
-
-    it('should call onChange when second input is changed', async () => {
+    it('should call onChange handler after second input is changed', async () => {
       const inputs = screen.getAllByRole('textbox')
       fireEvent.change(inputs[1], { target: { value: '90' } })
 
       await waitFor(() => {
-        expect(handleChange).toHaveBeenCalled()
+        expect(handleChange).toHaveBeenCalledWith([0, 90])
       })
     })
 
@@ -107,7 +97,7 @@ describe('AppRange', () => {
       expect(handleChange).not.toHaveBeenCalled()
     })
 
-    it('constrains values on blur', () => {
+    it('should constrain values on blur', () => {
       const inputs = screen.getAllByRole('textbox')
 
       fireEvent.change(inputs[1], { target: { value: '999' } })
@@ -123,7 +113,7 @@ describe('AppRange', () => {
       expect(handleChange).not.toHaveBeenCalled()
     })
 
-    it('should not update or call onChange when input is blurred with the same value', () => {
+    it('should not call onChange handler when input is blurred with the same value', () => {
       const inputs = screen.getAllByRole('textbox')
       const minInput = inputs[0]
 
