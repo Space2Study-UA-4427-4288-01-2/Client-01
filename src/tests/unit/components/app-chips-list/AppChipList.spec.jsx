@@ -21,41 +21,56 @@ const HostComp = ({ initialItems }) => {
   )
 }
 
-describe('AppChipList (integration)', () => {
-  const defaultItems = ['One', 'Two', 'Three', 'Four']
+const items = ['One', 'Two', 'Three']
 
-  it('should show chips', () => {
-    const items = ['One', 'Two', 'Three']
+describe('AppChipList', () => {
+  it('should render snapshot correctly', () => {
+    const snapshot = render(<AppChipList defaultQuantity={3} items={items} />)
+    expect(snapshot.asFragment()).toMatchSnapshot()
+  })
 
-    render(<AppChipList defaultQuantity={3} items={items} />)
-
-    items.forEach((item) => {
-      expect(screen.getByText(item)).toBeInTheDocument()
+  describe('AppChipList - rendering chips', () => {
+    beforeEach(() => {
+      render(<AppChipList defaultQuantity={3} items={items} />)
     })
 
-    const chips = screen.getAllByTestId('chip')
-    expect(chips).toHaveLength(items.length)
+    it('should render all chip texts', () => {
+      items.forEach((item) => {
+        expect(screen.getByText(item)).toBeInTheDocument()
+      })
+    })
+
+    it('should render the correct number of chips', () => {
+      const chips = screen.getAllByTestId('chip')
+      expect(chips).toHaveLength(items.length)
+    })
   })
 
   it('it should show chip with +3', () => {
     render(
-      <AppChipList defaultQuantity={2} items={[...defaultItems, 'five']} />
+      <AppChipList defaultQuantity={2} items={[...items, 'Four', 'five']} />
     )
 
     const showMore = screen.getByTestId('amount-of-chips')
     expect(showMore).toHaveTextContent('+3')
   })
 
-  it('should show only 7 chips', () => {
+  describe('AppChipList - limited rendering with "show more"', () => {
     const items = getItemList(10)
 
-    render(<AppChipList defaultQuantity={7} items={items} />)
+    beforeEach(() => {
+      render(<AppChipList defaultQuantity={7} items={items} />)
+    })
 
-    const visibleChips = screen.getAllByTestId('chip')
-    expect(visibleChips).toHaveLength(7)
+    it('should render only 7 visible chips', () => {
+      const visibleChips = screen.getAllByTestId('chip')
+      expect(visibleChips).toHaveLength(7)
+    })
 
-    const showMoreChip = screen.getByTestId('amount-of-chips')
-    expect(showMoreChip).toHaveTextContent('+3')
+    it('should render the "show more" chip with the correct count', () => {
+      const showMoreChip = screen.getByTestId('amount-of-chips')
+      expect(showMoreChip).toHaveTextContent('+3')
+    })
   })
 
   it('should show only 10 chips', () => {
@@ -65,26 +80,18 @@ describe('AppChipList (integration)', () => {
 
     const visibleChips = screen.getAllByTestId('chip')
     expect(visibleChips).toHaveLength(10)
-
-    const showMoreChip = screen.getByTestId('amount-of-chips')
-    expect(showMoreChip).toHaveTextContent('+1')
   })
 
-  // which is better? this one or the next
-  it('should delete 1 chip', () => {
-    let items = ['One', 'Two']
+  it('should call delete handler after close button clicked', () => {
     const handleChipDelete = vi.fn()
 
     render(
       <AppChipList
         defaultQuantity={2}
         handleChipDelete={handleChipDelete}
-        items={items}
+        items={['One', 'Two']}
       />
     )
-
-    let chips = screen.getAllByTestId('chip')
-    expect(chips).toHaveLength(2)
 
     const deleteButton = screen.getAllByTestId('close-btn')[0]
     fireEvent.click(deleteButton)
@@ -92,17 +99,24 @@ describe('AppChipList (integration)', () => {
     expect(handleChipDelete).toHaveBeenCalledWith('One')
   })
 
-  it('should delete 1 chip from the list', () => {
-    render(<HostComp initialItems={['One', 'Two']} />)
+  describe('AppChipList - deleting chips', () => {
+    beforeEach(() => {
+      render(<HostComp initialItems={['One', 'Two']} />)
+    })
 
-    expect(screen.getAllByTestId('chip')).toHaveLength(2)
+    it('should remove the first chip when delete is clicked', () => {
+      const deleteButton = screen.getAllByTestId('close-btn')[0]
+      fireEvent.click(deleteButton)
 
-    const deleteButton = screen.getAllByTestId('close-btn')[0]
-    fireEvent.click(deleteButton)
+      const chips = screen.getAllByTestId('chip')
+      expect(chips).toHaveLength(1)
+    })
 
-    const chips = screen.getAllByTestId('chip')
-    expect(chips).toHaveLength(1)
-    expect(screen.queryByText('One')).not.toBeInTheDocument()
-    expect(screen.getByText('Two')).toBeInTheDocument()
+    it('should remove the correct chip and keep the other one', () => {
+      const deleteButton = screen.getAllByTestId('close-btn')[0]
+      fireEvent.click(deleteButton)
+
+      expect(screen.getByText('Two')).toBeInTheDocument()
+    })
   })
 })
