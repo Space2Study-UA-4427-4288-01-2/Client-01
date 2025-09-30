@@ -11,8 +11,8 @@ const mockOptions = {
 const handleChange = vi.fn()
 
 describe('AppContentSwitcher', () => {
-  it('should render with the correct props', () => {
-    render(
+  it('should render correctly snapshot', () => {
+    const snapshot = render(
       <AppContentSwitcher
         active
         onChange={handleChange}
@@ -20,30 +20,38 @@ describe('AppContentSwitcher', () => {
         typographyVariant='h6'
       />
     )
-
-    const switchElem = screen.getByRole('checkbox')
-    expect(switchElem).toBeChecked()
-
-    expect(screen.getByText('Left option')).toBeInTheDocument()
-
-    expect(screen.getByText('Right option')).toBeInTheDocument()
-
-    const leftTypography = screen.getByText('Left option')
-    expect(leftTypography).toHaveClass('MuiTypography-h6')
+    expect(snapshot.asFragment()).toMatchSnapshot()
   })
 
-  it('should render left and right options', () => {
-    render(
-      <AppContentSwitcher
-        active
-        onChange={handleChange}
-        switchOptions={mockOptions}
-        typographyVariant={TypographyVariantEnum.H6}
-      />
-    )
+  describe('AppContentSwitcher - rendering with props', () => {
+    beforeEach(() => {
+      render(
+        <AppContentSwitcher
+          active
+          onChange={handleChange}
+          switchOptions={mockOptions}
+          typographyVariant='h6'
+        />
+      )
+    })
 
-    expect(screen.getByText('Left option')).toBeInTheDocument()
-    expect(screen.getByText('Right option')).toBeInTheDocument()
+    it('should render the switch as checked when active=true', () => {
+      const switchElem = screen.getByRole('checkbox')
+      expect(switchElem).toBeChecked()
+    })
+
+    it('should render left option text', () => {
+      expect(screen.getByText('Left option')).toBeInTheDocument()
+    })
+
+    it('should render right option text', () => {
+      expect(screen.getByText('Right option')).toBeInTheDocument()
+    })
+
+    it('should apply the correct typography variant to left option', () => {
+      const leftTypography = screen.getByText('Left option')
+      expect(leftTypography).toHaveClass('MuiTypography-h6')
+    })
   })
 
   it('should call the onChange function when the switch is clicked', () => {
@@ -77,24 +85,30 @@ describe('AppContentSwitcher', () => {
     expect(stack).toHaveStyle('background: red')
   })
 
-  it('should render tooltips when tooltip props are passed', async () => {
-    render(
-      <AppContentSwitcher
-        active
-        onChange={handleChange}
-        switchOptions={mockOptions}
-        typographyVariant={TypographyVariantEnum.H6}
-      />
-    )
+  describe('AppContentSwitcher - tooltips', () => {
+    beforeEach(() => {
+      render(
+        <AppContentSwitcher
+          active
+          onChange={handleChange}
+          switchOptions={mockOptions}
+          typographyVariant={TypographyVariantEnum.H6}
+        />
+      )
+    })
 
-    const leftOption = screen.getByText('Left option')
-    fireEvent.mouseOver(leftOption)
+    it('should show left option tooltip on hover', async () => {
+      const leftOption = screen.getByText('Left option')
+      fireEvent.mouseOver(leftOption)
 
-    expect(await screen.findByText('Tooltip left')).toBeInTheDocument()
+      expect(await screen.findByText('Tooltip left')).toBeInTheDocument()
+    })
 
-    const rightOption = screen.getByText('Right option')
-    fireEvent.mouseOver(rightOption)
+    it('should show right option tooltip on hover', async () => {
+      const rightOption = screen.getByText('Right option')
+      fireEvent.mouseOver(rightOption)
 
-    expect(await screen.findByText('Tooltip right')).toBeInTheDocument()
+      expect(await screen.findByText('Tooltip right')).toBeInTheDocument()
+    })
   })
 })

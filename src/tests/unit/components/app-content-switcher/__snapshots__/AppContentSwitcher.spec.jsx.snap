@@ -1,0 +1,47 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AppContentSwitcher > should renders correctly snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiStack-root css-1thduj9-MuiStack-root"
+  >
+    <h6
+      aria-label="Tooltip left"
+      class="MuiTypography-root MuiTypography-h6 css-7mlg6l-MuiTypography-root"
+      data-mui-internal-clone-element="true"
+    >
+      Left option
+    </h6>
+    <span
+      class="MuiSwitch-root MuiSwitch-sizeMedium css-1mmi41l-MuiSwitch-root"
+    >
+      <span
+        class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+        data-testid="switch"
+      >
+        <input
+          checked=""
+          class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+          type="checkbox"
+        />
+        <span
+          class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
+        />
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </span>
+      <span
+        class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
+      />
+    </span>
+    <h6
+      aria-label="Tooltip right"
+      class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+      data-mui-internal-clone-element="true"
+    >
+      Right option
+    </h6>
+  </div>
+</DocumentFragment>
+`;
