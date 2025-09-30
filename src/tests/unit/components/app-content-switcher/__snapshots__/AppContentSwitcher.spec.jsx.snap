@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AppContentSwitcher > should renders correctly snapshot 1`] = `
+exports[`AppContentSwitcher > should render correctly snapshot 1`] = `
 <DocumentFragment>
   <div
     class="MuiStack-root css-1thduj9-MuiStack-root"
