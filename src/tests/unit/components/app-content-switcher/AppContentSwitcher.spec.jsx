@@ -8,13 +8,14 @@ const mockOptions = {
   left: { text: 'Left option', tooltip: 'Tooltip left' },
   right: { text: 'Right option', tooltip: 'Tooltip right' }
 }
+const handleChange = vi.fn()
 
 describe('AppContentSwitcher', () => {
   it('should render with the correct props', () => {
     render(
       <AppContentSwitcher
         active
-        onChange={() => {}}
+        onChange={handleChange}
         switchOptions={mockOptions}
         typographyVariant='h6'
       />
@@ -35,7 +36,7 @@ describe('AppContentSwitcher', () => {
     render(
       <AppContentSwitcher
         active
-        onChange={() => {}}
+        onChange={handleChange}
         switchOptions={mockOptions}
         typographyVariant={TypographyVariantEnum.H6}
       />
@@ -46,8 +47,6 @@ describe('AppContentSwitcher', () => {
   })
 
   it('should call the onChange function when the switch is clicked', () => {
-    const handleChange = vi.fn()
-
     render(
       <AppContentSwitcher
         active={false}
@@ -67,7 +66,7 @@ describe('AppContentSwitcher', () => {
     render(
       <AppContentSwitcher
         active={false}
-        onChange={() => {}}
+        onChange={handleChange}
         styles={{ background: 'red' }}
         switchOptions={mockOptions}
         typographyVariant={TypographyVariantEnum.H6}
@@ -82,7 +81,7 @@ describe('AppContentSwitcher', () => {
     render(
       <AppContentSwitcher
         active
-        onChange={() => {}}
+        onChange={handleChange}
         switchOptions={mockOptions}
         typographyVariant={TypographyVariantEnum.H6}
       />
