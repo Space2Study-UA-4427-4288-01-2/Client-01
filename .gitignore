@@ -10,6 +10,7 @@
 /src/tests/coverage
 test-report.xml
 .scannerwork
+eslint-report.json
 
 # production
 /build
