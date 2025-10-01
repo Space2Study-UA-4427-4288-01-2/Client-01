@@ -25,6 +25,19 @@ describe('AppRange', () => {
     expect(maxInput).toHaveValue('100')
   })
 
+  it('should call onChange handler with min number if first input is empty on blur', async () => {
+    const inputs = screen.getAllByRole('textbox')
+    const minInput = inputs[0]
+
+    fireEvent.change(minInput, { target: { value: '' } })
+
+    fireEvent.blur(minInput)
+
+    await waitFor(() => {
+      expect(handleChange).toHaveBeenLastCalledWith([0, 100])
+    })
+  })
+
   describe('AppRange - slider interaction', () => {
     it('should call onChange handler when min slider is changed', async () => {
       const sliders = screen.getAllByRole('slider')
@@ -104,13 +117,6 @@ describe('AppRange', () => {
       fireEvent.blur(inputs[1])
 
       expect(inputs[1]).toHaveValue('100')
-    })
-
-    it('should not call onChange when input is cleared', () => {
-      const inputs = screen.getAllByRole('textbox')
-      fireEvent.change(inputs[0], { target: { value: '' } })
-
-      expect(handleChange).not.toHaveBeenCalled()
     })
 
     it('should not call onChange handler when input is blurred with the same value', () => {
