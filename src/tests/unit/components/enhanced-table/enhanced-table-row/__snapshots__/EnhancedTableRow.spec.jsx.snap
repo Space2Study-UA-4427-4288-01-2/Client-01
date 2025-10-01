@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EnhancedTableRow > should renders correctly snapshot 1`] = `
+<DocumentFragment>
+  <table>
+    <tbody>
+      <tr
+        class="MuiTableRow-root MuiTableRow-hover css-1yu0aci-MuiTableRow-root"
+      >
+        <td
+          class="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
+        >
+          Some name
+        </td>
+        <td
+          class="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
+        >
+          13
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</DocumentFragment>
+`;
