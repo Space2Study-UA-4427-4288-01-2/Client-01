@@ -5,6 +5,7 @@ const mockOpenMenu = vi.fn()
 const mockCloseMenu = vi.fn()
 const mockRenderMenu = (el) => el
 const onEdit = vi.fn()
+
 vi.mock('~/hooks/use-menu', () => ({
   default: () => ({
     openMenu: mockOpenMenu,
@@ -25,6 +26,7 @@ describe('Question Editor', () => {
   }
   const handleInputChange = vi.fn(() => vi.fn())
   const handleNonInputValueChange = vi.fn()
+
   beforeEach(() => {
     vi.clearAllMocks()
     component = render(
@@ -57,6 +59,7 @@ describe('Question Editor', () => {
 
     beforeEach(() => {
       vi.clearAllMocks()
+
       component.rerender(
         <QuestionEditor
           data={openAnswerData}
@@ -65,6 +68,7 @@ describe('Question Editor', () => {
         />
       )
     })
+
     it('should render an open answer input field', () => {
       const input = screen.getByRole('textbox', { name: 'questionPage.answer' })
       expect(input).toHaveValue('Just have a fun')
