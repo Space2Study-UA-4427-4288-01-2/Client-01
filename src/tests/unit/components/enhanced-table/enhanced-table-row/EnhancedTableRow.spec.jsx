@@ -29,7 +29,7 @@ vi.mock('~/hooks/use-menu', () => ({
 const actionFunc = vi.fn().mockResolvedValue(undefined)
 const refetchData = vi.fn()
 
-function renderInTable(children) {
+const renderInTable = (children) => {
   return render(
     <table>
       <tbody>{children}</tbody>
