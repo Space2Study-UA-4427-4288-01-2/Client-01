@@ -43,4 +43,11 @@ describe('EnhancedTablePagination', () => {
       2
     )
   })
+
+  it('should match snapshot', () => {
+    const { asFragment } = render(
+      <EnhancedTablePagination pagination={paginationMock} />
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
 })
