@@ -29,6 +29,14 @@ vi.mock('~/hooks/use-menu', () => ({
 const actionFunc = vi.fn().mockResolvedValue(undefined)
 const refetchData = vi.fn()
 
+function renderInTable(children) {
+  return render(
+    <table>
+      <tbody>{children}</tbody>
+    </table>
+  )
+}
+
 describe('EnhancedTableRow', () => {
   const baseItem = { _id: '1', name: 'Some name', value: '13' }
   const columns = [
@@ -36,39 +44,26 @@ describe('EnhancedTableRow', () => {
     { field: 'value', label: 'Value' }
   ]
 
+  const defaultProps = {
+    columns,
+    item: baseItem,
+    selectedRows: [],
+    rowActions: [{ label: 'Delete', func: actionFunc }]
+  }
+
   beforeEach(() => {
     vi.clearAllMocks()
   })
 
   it('should renders correctly snapshot', () => {
-    const snapshot = render(
-      <table>
-        <tbody>
-          <EnhancedTableRow
-            columns={columns}
-            item={baseItem}
-            selectedRows={[]}
-          />
-        </tbody>
-      </table>
-    )
+    const snapshot = renderInTable(<EnhancedTableRow {...defaultProps} />)
+
     expect(snapshot.asFragment()).toMatchSnapshot()
   })
 
   describe('EnhancedTableRow - action menu', () => {
     it('should render action menu when menu icon is clicked', () => {
-      render(
-        <table>
-          <tbody>
-            <EnhancedTableRow
-              columns={columns}
-              item={baseItem}
-              rowActions={[{ label: 'Delete', func: vi.fn() }]}
-              selectedRows={[]}
-            />
-          </tbody>
-        </table>
-      )
+      renderInTable(<EnhancedTableRow {...defaultProps} />)
 
       fireEvent.click(screen.getByTestId('menu-icon'))
 
@@ -82,22 +77,15 @@ describe('EnhancedTableRow', () => {
     it('should call handleSelectClick when checkbox is clicked', () => {
       const mockIsSelected = vi.fn(() => false)
       const mockHandleSelectClick = vi.fn()
-
-      render(
-        <table>
-          <tbody>
-            <EnhancedTableRow
-              columns={columns}
-              isSelection
-              item={baseItem}
-              select={{
-                isSelected: mockIsSelected,
-                handleSelectClick: mockHandleSelectClick
-              }}
-              selectedRows={[]}
-            />
-          </tbody>
-        </table>
+      renderInTable(
+        <EnhancedTableRow
+          {...defaultProps}
+          isSelection
+          select={{
+            isSelected: mockIsSelected,
+            handleSelectClick: mockHandleSelectClick
+          }}
+        />
       )
 
       const checkbox = screen.getByRole('checkbox')
@@ -110,18 +98,8 @@ describe('EnhancedTableRow', () => {
 
   describe('EnhancedTableRow - onAction', () => {
     beforeEach(() => {
-      render(
-        <table>
-          <tbody>
-            <EnhancedTableRow
-              columns={columns}
-              item={baseItem}
-              refetchData={refetchData}
-              rowActions={[{ label: 'Delete', func: actionFunc }]}
-              selectedRows={[]}
-            />
-          </tbody>
-        </table>
+      renderInTable(
+        <EnhancedTableRow {...defaultProps} refetchData={refetchData} />
       )
       vi.clearAllMocks()
     })
