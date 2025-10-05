@@ -16,7 +16,7 @@ exports[`EnhancedTablePagination > should match snapshot 1`] = `
         />
         <p
           class="MuiTablePagination-selectLabel css-pdct74-MuiTablePagination-selectLabel"
-          id=":r9:"
+          id=":rh:"
         >
           table.numberOfRows
         </p>
@@ -24,12 +24,12 @@ exports[`EnhancedTablePagination > should match snapshot 1`] = `
           class="MuiInputBase-root MuiInputBase-colorPrimary MuiTablePagination-input css-16c50h-MuiInputBase-root-MuiTablePagination-select"
         >
           <div
-            aria-controls=":ra:"
+            aria-controls=":ri:"
             aria-expanded="false"
             aria-haspopup="listbox"
-            aria-labelledby=":r9: :r8:"
+            aria-labelledby=":rh: :rg:"
             class="MuiSelect-select MuiTablePagination-select MuiSelect-standard MuiInputBase-input css-194a1fa-MuiSelect-select-MuiInputBase-input"
-            id=":r8:"
+            id=":rg:"
             role="combobox"
             tabindex="0"
           >
@@ -189,7 +189,7 @@ exports[`EnhancedTablePagination > should match snapshot 1`] = `
             aria-invalid="false"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
             data-testid="pagination-page-input"
-            id=":rb:"
+            id=":rj:"
             type="number"
             value="1"
           />
