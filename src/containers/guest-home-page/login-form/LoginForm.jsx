@@ -28,6 +28,8 @@ const LoginForm = ({
 
   const { t } = useTranslation()
 
+  const { password, email } = data
+
   const openForgotPassword = () => {
     openModal({ component: <ForgotPassword /> })
   }
@@ -70,7 +72,12 @@ const LoginForm = ({
         {t('login.forgotPassword')}
       </Typography>
 
-      <AppButton loading={authLoading} sx={styles.loginButton} type='submit'>
+      <AppButton
+        disabled={!password || !email}
+        loading={authLoading}
+        sx={styles.loginButton}
+        type='submit'
+      >
         {t('common.labels.login')}
       </AppButton>
     </Box>
