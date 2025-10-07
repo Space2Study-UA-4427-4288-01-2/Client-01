@@ -78,13 +78,11 @@ const ForgotPassword = () => {
 
   return (
     <Box sx={styles.root}>
-      <Box sx={{ mb: '20px' }}>
-        <TitleWithDescription
-          description={t('login.enterEmail')}
-          style={styles.titleWithDescription}
-          title={t('login.forgotPassword')}
-        />
-      </Box>
+      <TitleWithDescription
+        description={t('login.enterEmail')}
+        style={styles.titleWithDescription}
+        title={t('login.forgotPassword')}
+      />
 
       <Box component='form' onSubmit={handleSubmit}>
         <AppTextField
