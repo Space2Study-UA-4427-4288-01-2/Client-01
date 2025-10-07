@@ -127,7 +127,9 @@ describe('Login form test with loading', () => {
 
   it('should enable button when both fields are filled', () => {
     renderForm({ email: 'email@mail.com', password: 'validPass' })
-    expect(screen.getByText('common.labels.login')).not.toBeDisabled()
+    const button = screen.getByText('common.labels.login')
+    expect(button).toBeInTheDocument()
+    expect(button).not.toBeDisabled()
   })
 
   it('should not trigger handleSubmit when button disabled', () => {
