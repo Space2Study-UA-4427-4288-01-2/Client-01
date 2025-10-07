@@ -12,7 +12,7 @@ export const styles = {
     maxWidth: '80px',
     gap: '14px'
   },
-  socialLink: { color: 'primary.50', height: '24px' },
+  socialLink: { color: 'primary.50', height: '24px', cursor: 'pointer' },
   logo: { maxWidth: { xs: '110px', md: '150px' } },
   linksWrapper: {
     display: 'flex',
