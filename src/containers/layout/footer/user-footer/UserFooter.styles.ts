@@ -18,9 +18,5 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between'
   },
-  divider: { borderColor: 'primary.100', my: '6px' },
-  copyRight: {
-    textAlign: 'center',
-    typography: { xs: 'caption', md: 'body2' }
-  }
+  divider: { borderColor: 'primary.100', my: '6px' }
 }
