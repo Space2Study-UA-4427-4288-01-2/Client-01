@@ -70,7 +70,7 @@ export const removeColumnRules: RemoveColumnRules<Question> = {
   tablet: ['myResourcesPage.questions.updated']
 }
 
-export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }
+export const initialSort = { order: SortEnum.Desc, orderBy: 'title' }
 
 export const itemsLoadLimit = {
   default: 10,

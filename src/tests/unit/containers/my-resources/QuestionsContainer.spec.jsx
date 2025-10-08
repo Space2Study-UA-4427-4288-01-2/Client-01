@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 
 import QuestionsContainer from '~/containers/my-resources/questions-container/QuestionsContainer'
 
@@ -74,6 +74,19 @@ describe('QuestionsContainer test', () => {
 
     expect(columnLabel).toBeInTheDocument()
     expect(questionTitle).toBeInTheDocument()
+  })
+
+  it('should display descending arrow next to the "title" column label', async () => {
+    const titleHeader = await screen.findByText(
+      'myResourcesPage.questions.title'
+    )
+
+    const sortLabel = titleHeader.closest('[data-testid="tableSortLabel"]')
+    expect(sortLabel).not.toBeNull()
+
+    const arrowIcon = within(sortLabel).getByTestId('ArrowDownwardIcon')
+    expect(arrowIcon).toBeInTheDocument()
+    expect(arrowIcon).toHaveClass('MuiTableSortLabel-iconDirectionDesc')
   })
 })
 
