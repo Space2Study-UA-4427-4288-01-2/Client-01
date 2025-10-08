@@ -1,32 +1,56 @@
+import { FormEventHandler, ChangeEventHandler, FocusEventHandler } from 'react'
 import { useTranslation } from 'react-i18next'
-import useInputVisibility from '~/hooks/use-input-visibility'
-import { useSelector } from 'react-redux'
 
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
 import Typography from '@mui/material/Typography'
+
 import { useModalContext } from '~/context/modal-context'
+import useInputVisibility from '~/hooks/use-input-visibility'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
-
 import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles'
+import { useAppSelector } from '~/hooks/use-redux'
 
-const LoginForm = ({
+interface LoginFormData {
+  email: string
+  password: string
+}
+
+interface LoginFormErrors {
+  email?: string
+  password?: string
+}
+
+interface LoginFormProps {
+  handleSubmit: FormEventHandler<HTMLFormElement>
+  handleChange: (
+    field: keyof LoginFormData
+  ) => ChangeEventHandler<HTMLInputElement>
+  handleBlur: (
+    field: keyof LoginFormData
+  ) => FocusEventHandler<HTMLInputElement>
+  data: LoginFormData
+  errors: LoginFormErrors
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({
   handleSubmit,
   handleChange,
   handleBlur,
   data,
   errors
 }) => {
-  const { inputVisibility: passwordVisibility, showInputText: showPassword } =
-    useInputVisibility(errors.password)
-
-  const { authLoading } = useSelector((state) => state.appMain)
+  const { t } = useTranslation()
+  const { authLoading } = useAppSelector((state) => state.appMain)
 
   const { openModal } = useModalContext()
 
-  const { t } = useTranslation()
+  const { inputVisibility: passwordVisibility, showInputText: showPassword } =
+    useInputVisibility(errors.password)
+
+  const { password, email } = data
 
   const openForgotPassword = () => {
     openModal({ component: <ForgotPassword /> })
@@ -36,29 +60,29 @@ const LoginForm = ({
     <Box component='form' onSubmit={handleSubmit} sx={styles.form}>
       <AppTextField
         autoFocus
-        data-testid={'email'}
-        errorMsg={t(errors.email)}
+        data-testid='email'
+        errorMsg={t(String(errors.email || ''))}
         fullWidth
         label={t('common.labels.email')}
         onBlur={handleBlur('email')}
         onChange={handleChange('email')}
         required
-        size='large'
+        size='medium'
         sx={{ mb: '5px' }}
         type='email'
-        value={data.email}
+        value={email}
       />
 
       <AppTextField
         InputProps={passwordVisibility}
-        errorMsg={t(errors.password)}
+        errorMsg={t(String(errors.password || ''))}
         fullWidth
         label={t('common.labels.password')}
         onBlur={handleBlur('password')}
         onChange={handleChange('password')}
         required
         type={showPassword ? 'text' : 'password'}
-        value={data.password}
+        value={password}
       />
 
       <Typography
@@ -70,7 +94,12 @@ const LoginForm = ({
         {t('login.forgotPassword')}
       </Typography>
 
-      <AppButton loading={authLoading} sx={styles.loginButton} type='submit'>
+      <AppButton
+        disabled={!password || !email}
+        loading={authLoading}
+        sx={styles.loginButton}
+        type='submit'
+      >
         {t('common.labels.login')}
       </AppButton>
     </Box>
