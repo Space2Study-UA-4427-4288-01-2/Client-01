@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { markFirstLoginComplete } from '~/redux/reducer'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
@@ -15,18 +15,33 @@ import {
   initialValues
 } from '~/components/user-steps-wrapper/constants'
 import { student } from '~/constants'
+import { UserResponse, UserRole } from '~/types'
+import useAxios from '~/hooks/use-axios'
+import { userService } from '~/services/user-service'
 
 interface UserStepsWrapperProps {
-  userRole: string
+  userRole: UserRole
+  userId: string
 }
 
-const UserStepsWrapper: FC<UserStepsWrapperProps> = ({ userRole }) => {
+const UserStepsWrapper: FC<UserStepsWrapperProps> = ({ userRole, userId }) => {
   const [isUserFetched, setIsUserFetched] = useState(false)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(markFirstLoginComplete())
   }, [dispatch])
+
+  const service = useCallback(
+    () => userService.getUserById(userId, userRole),
+    [userId, userRole]
+  )
+
+  const { response } = useAxios<UserResponse | null>({
+    service,
+    defaultResponse: null,
+    fetchOnMount: true
+  })
 
   const childrenArr = [
     <GeneralInfoStep
@@ -39,10 +54,13 @@ const UserStepsWrapper: FC<UserStepsWrapperProps> = ({ userRole }) => {
     <AddPhotoStep key='4' />
   ]
 
-  const stepLabels = userRole === student ? '' : tutorStepLabels
+  const stepLabels = userRole === student ? [''] : tutorStepLabels
 
   return (
-    <StepProvider initialValues={initialValues} stepLabels={stepLabels}>
+    <StepProvider
+      initialValues={{ ...initialValues, ...response }}
+      stepLabels={stepLabels}
+    >
       <StepWrapper steps={stepLabels}>{childrenArr}</StepWrapper>
     </StepProvider>
   )

@@ -9,21 +9,26 @@ import FindBlock from '~/components/find-block/FindBlock'
 
 import { styles } from '~/pages/tutor-home/TutorHome.styles'
 import { translationKey } from '~/components/find-block/find-student-constants'
+import { UserRole } from '~/types'
 
 const TutorHome = () => {
   const { openModal } = useModalContext()
-  const { isFirstLogin, userRole } = useAppSelector((state) => state.appMain)
+  const { isFirstLogin, userRole, userId } = useAppSelector(
+    (state) => state.appMain
+  )
 
   useEffect(() => {
     if (isFirstLogin) {
       openModal({
-        component: <UserStepsWrapper userRole={userRole} />,
+        component: (
+          <UserStepsWrapper userId={userId} userRole={userRole as UserRole} />
+        ),
         paperProps: {
           sx: styles.modal
         }
       })
     }
-  }, [openModal, isFirstLogin, userRole])
+  }, [openModal, isFirstLogin, userRole, userId])
 
   return (
     <PageWrapper data-testid='tutorHome'>

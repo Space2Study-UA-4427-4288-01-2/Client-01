@@ -43,7 +43,7 @@ const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
   useEffect(() => {
     !fetchOnFocus && (fetchCondition ?? true) && void fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [service])
+  }, [service, fetchCondition, fetchOnFocus])
 
   const valueOption = useMemo(
     () =>
