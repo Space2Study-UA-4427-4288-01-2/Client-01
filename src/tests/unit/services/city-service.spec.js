@@ -1,55 +1,56 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { cityService } from '~/services/city-service'
-import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
+import { mockAxiosClient } from '~tests/test-utils'
+import { cityService } from '~/services/city-service'
 import { cities } from '~/constants/mocks/cities'
 
-vi.mock('~/plugins/axiosClient', () => ({
-  axiosClient: {
-    get: vi.fn()
-  }
-}))
+describe('cityService tests', () => {
+  it('should make a GET request to the correct URL with params', async () => {
+    const options = { name: 'Ky' }
 
-describe('cityService', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
+    mockAxiosClient.onGet(URLs.cities.get, { params: options }).reply(200, [])
+
+    await cityService.getCities(options)
+
+    expect(mockAxiosClient.history.get[0].url).toBe(URLs.cities.get)
+    expect(mockAxiosClient.history.get[0].params).toEqual(options)
   })
 
-  describe('getCities', () => {
-    it('should call axiosClient.get with correct URL and params', async () => {
-      const mockResponse = { data: [{ id: 1, name: 'Kyiv' }] }
-      axiosClient.get.mockResolvedValueOnce(mockResponse)
+  it('should make a GET request to the correct URL without params', async () => {
+    mockAxiosClient.onGet(URLs.cities.get).reply(200, [])
 
-      const params = { name: 'Ky' }
-      const result = await cityService.getCities(params)
+    await cityService.getCities()
 
-      expect(axiosClient.get).toHaveBeenCalledWith(URLs.cities.get, { params })
-      expect(result).toEqual(mockResponse)
-    })
-
-    it('should work without params', async () => {
-      const mockResponse = { data: [] }
-      axiosClient.get.mockResolvedValueOnce(mockResponse)
-
-      const result = await cityService.getCities()
-
-      expect(axiosClient.get).toHaveBeenCalledWith(URLs.cities.get, {
-        params: undefined
-      })
-      expect(result).toEqual(mockResponse)
-    })
+    expect(mockAxiosClient.history.get[0].url).toBe(URLs.cities.get)
   })
 
-  describe('getCitiesMock', () => {
-    it('should return a resolved promise with mocked cities', async () => {
-      const result = await cityService.getCitiesMock()
-      expect(result.data).toEqual(cities)
-    })
+  it('should return an array of cities', async () => {
+    const responseData = [
+      { id: 1, name: 'Kyiv' },
+      { id: 2, name: 'Lviv' }
+    ]
 
-    it('should return an object with a data array', async () => {
-      const result = await cityService.getCitiesMock()
-      expect(result).toHaveProperty('data')
-      expect(Array.isArray(result.data)).toBe(true)
-    })
+    mockAxiosClient.onGet(URLs.cities.get).reply(200, responseData)
+
+    const response = await cityService.getCities()
+
+    expect(response.status).toBe(200)
+    expect(response.data).toEqual(responseData)
+  })
+
+  it('should return mocked cities from getCitiesMock()', async () => {
+    const response = await cityService.getCitiesMock()
+
+    expect(response.data).toEqual(cities)
+    expect(Array.isArray(response.data)).toBe(true)
+  })
+
+  it('should handle an empty mock list gracefully', async () => {
+    const backup = [...cities]
+    cities.length = 0
+
+    const response = await cityService.getCitiesMock()
+    expect(response.data).toEqual([])
+
+    cities.push(...backup)
   })
 })
