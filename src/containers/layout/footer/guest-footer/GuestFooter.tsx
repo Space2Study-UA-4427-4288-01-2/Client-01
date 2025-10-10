@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { styles } from '~/containers/layout/footer/Footer.styles'
 import { TypographyVariantEnum } from '~/types'
+import AllRightReserved from '~/containers/layout/footer/all-rights-reserved/AllRightsReserved'
 
 const GuestFooter = () => {
   const { privacyPolicy, termOfUse } = guestRoutes
@@ -15,9 +16,7 @@ const GuestFooter = () => {
 
   return (
     <Container sx={styles.container}>
-      <Typography variant={TypographyVariantEnum.Caption}>
-        {t('footer.allRightsReserved')}
-      </Typography>
+      <AllRightReserved />
       <Box sx={styles.links}>
         <Typography
           component={RouterLink}

@@ -27,7 +27,11 @@ const TitleBlock: FC<TitleBlockProps> = ({
   const { userRole } = useAppSelector((state) => state.appMain)
 
   return (
-    <Box className='section' sx={{ ...styles.container, ...style }}>
+    <Box
+      className='section'
+      id='welcome'
+      sx={{ ...styles.container, ...style }}
+    >
       <Box sx={styles.info}>
         <TitleWithDescription
           description={t(`${translationKey}.description`)}

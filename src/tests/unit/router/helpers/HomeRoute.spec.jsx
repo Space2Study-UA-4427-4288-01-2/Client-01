@@ -34,7 +34,7 @@ describe('HomeRoute component', () => {
       preloadedState: studentState
     })
 
-    expect(mockedUseNavigate).toHaveBeenCalledWith('student')
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/student')
   })
 
   it('should navigate to "tutor" when userRole is corresponded', () => {
@@ -42,7 +42,7 @@ describe('HomeRoute component', () => {
       preloadedState: tutorState
     })
 
-    expect(mockedUseNavigate).toHaveBeenCalledWith('tutor')
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/tutor')
   })
 
   it('should navigate to "admin" when userRole is corresponded', () => {
@@ -50,6 +50,6 @@ describe('HomeRoute component', () => {
       preloadedState: adminState
     })
 
-    expect(mockedUseNavigate).toHaveBeenCalledWith('admin')
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/admin')
   })
 })
