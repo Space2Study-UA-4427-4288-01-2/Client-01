@@ -107,6 +107,7 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
 
   const infoTextArea = () => (
     <AppTextArea
+      data-testid='user-info'
       fullWidth
       maxLength={70}
       onChange={handleChange('professionalSummary')}

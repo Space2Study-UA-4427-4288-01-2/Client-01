@@ -1,4 +1,6 @@
-const { mockAsyncAutocomplete, mockT } = vi.hoisted(() => ({
+import { mockT } from '~/tests/setup-tests'
+
+const { mockAsyncAutocomplete } = vi.hoisted(() => ({
   mockAsyncAutocomplete: vi.fn((props) => (
     <div
       data-testid='async-autocomplete'
@@ -6,20 +8,13 @@ const { mockAsyncAutocomplete, mockT } = vi.hoisted(() => ({
     >
       AsyncAutocompleteMock
     </div>
-  )),
-  mockT: vi.fn((key) => key)
+  ))
 }))
 
 vi.mock('~/services/city-service', () => ({
   cityService: {
     getCitiesMock: vi.fn()
   }
-}))
-
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: mockT
-  })
 }))
 
 vi.mock('~/components/async-autocomlete/AsyncAutocomplete', () => ({
@@ -52,6 +47,11 @@ describe('CityDropdown', () => {
         onChange={props.onChange ?? vi.fn()}
       />
     )
+
+  it('should render snapshot correctly', () => {
+    const snapshot = renderDropdown()
+    expect(snapshot.asFragment()).toMatchSnapshot()
+  })
 
   it('renders AsyncAutocomplete component', () => {
     renderDropdown()

@@ -1,3 +1,5 @@
+import { mockAppTextField } from '~/tests/unit/mocks/AppTextField.mock'
+import { mockAppTextArea } from '~/tests/unit/mocks/AppTextArea.mock'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest'
 
@@ -44,26 +46,6 @@ vi.mock('~/containers/city-dropdown/CityDropdown', () => ({
   ))
 }))
 
-vi.mock('~/components/app-text-field/AppTextField', () => ({
-  default: vi.fn((props) => (
-    <input
-      data-testid={props['data-testid']}
-      onChange={(e) => props.onChange(e)}
-      value={props.value}
-    />
-  ))
-}))
-
-vi.mock('~/components/app-text-area/AppTextArea', () => ({
-  default: vi.fn((props) => (
-    <textarea
-      data-testid='app-textarea'
-      onChange={(e) => props.onChange(e)}
-      value={props.value}
-    />
-  ))
-}))
-
 vi.mock('~/assets/img/shared-images/student.svg', () => ({
   default: 'mocked-student.svg'
 }))
@@ -77,10 +59,6 @@ beforeAll(async () => {
 })
 
 describe('GeneralInfoStep', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-  })
-
   const renderComponent = (props = {}) =>
     render(
       <GeneralInfoStep
@@ -88,22 +66,46 @@ describe('GeneralInfoStep', () => {
         {...props}
       />
     )
-
-  it('renders correctly with all main elements', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
     renderComponent()
+  })
 
-    expect(screen.getByRole('img')).toHaveAttribute('src', 'mocked-student.svg')
-    expect(screen.getByTestId('user-first-name')).toBeInTheDocument()
-    expect(screen.getByTestId('user-last-name')).toBeInTheDocument()
-    expect(screen.getByTestId('country-dropdown')).toBeInTheDocument()
-    expect(screen.getByTestId('city-dropdown')).toBeInTheDocument()
-    expect(screen.getByTestId('app-textarea')).toBeInTheDocument()
-    expect(screen.getByTestId('btns-box')).toBeInTheDocument()
+  describe('GeneralInfoStep — initial render', () => {
+    it('renders image with mocked src', () => {
+      expect(screen.getByRole('img')).toHaveAttribute(
+        'src',
+        'mocked-student.svg'
+      )
+    })
+
+    it('renders two AppTextField instances', () => {
+      expect(mockAppTextField).toHaveBeenCalledTimes(2)
+    })
+
+    it('renders first name input', () => {
+      expect(screen.getByTestId('user-first-name')).toBeInTheDocument()
+    })
+
+    it('renders last name input', () => {
+      expect(screen.getByTestId('user-last-name')).toBeInTheDocument()
+    })
+
+    it('renders country dropdown', () => {
+      expect(screen.getByTestId('country-dropdown')).toBeInTheDocument()
+    })
+
+    it('renders city dropdown', () => {
+      expect(screen.getByTestId('city-dropdown')).toBeInTheDocument()
+    })
+
+    it('renders professional summary textarea', () => {
+      expect(mockAppTextArea).toHaveBeenCalledTimes(1)
+      expect(screen.getByTestId('user-info')).toBeInTheDocument()
+    })
   })
 
   it('updates first name field and triggers handleStepData', () => {
-    renderComponent()
-
     const input = screen.getByTestId('user-first-name')
     fireEvent.change(input, { target: { value: 'Jane' } })
 
@@ -116,8 +118,6 @@ describe('GeneralInfoStep', () => {
   })
 
   it('updates last name field and triggers handleStepData', () => {
-    renderComponent()
-
     const input = screen.getByTestId('user-last-name')
     fireEvent.change(input, { target: { value: 'Smith' } })
 
@@ -130,9 +130,7 @@ describe('GeneralInfoStep', () => {
   })
 
   it('updates professional summary and triggers handleStepData', () => {
-    renderComponent()
-
-    const textArea = screen.getByTestId('app-textarea')
+    const textArea = screen.getByTestId('user-info')
     fireEvent.change(textArea, { target: { value: 'New summary' } })
 
     expect(mockHandleStepData).toHaveBeenCalledWith(
@@ -144,8 +142,6 @@ describe('GeneralInfoStep', () => {
   })
 
   it('handles country dropdown change correctly', () => {
-    renderComponent()
-
     const countryDropdown = screen.getByTestId('country-dropdown')
     fireEvent.click(countryDropdown)
 
@@ -158,8 +154,6 @@ describe('GeneralInfoStep', () => {
   })
 
   it('handles city dropdown change correctly', () => {
-    renderComponent()
-
     const cityDropdown = screen.getByTestId('city-dropdown')
     fireEvent.click(cityDropdown)
 

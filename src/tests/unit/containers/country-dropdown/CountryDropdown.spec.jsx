@@ -1,4 +1,6 @@
-const { mockAsyncAutocomplete, mockT } = vi.hoisted(() => ({
+import { mockT } from '~/tests/setup-tests'
+
+const { mockAsyncAutocomplete } = vi.hoisted(() => ({
   mockAsyncAutocomplete: vi.fn((props) => (
     <div
       data-testid='async-autocomplete'
@@ -6,20 +8,13 @@ const { mockAsyncAutocomplete, mockT } = vi.hoisted(() => ({
     >
       AsyncAutocompleteMock
     </div>
-  )),
-  mockT: vi.fn((key) => key)
+  ))
 }))
 
 vi.mock('~/services/country-service', () => ({
   countryService: {
     getCoutriesMock: vi.fn()
   }
-}))
-
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: mockT
-  })
 }))
 
 vi.mock('~/components/async-autocomlete/AsyncAutocomplete', () => ({
@@ -52,6 +47,11 @@ describe('CountryDropdown', () => {
         onChange={props.onChange ?? vi.fn()}
       />
     )
+
+  it('should render snapshot correctly', () => {
+    const snapshot = renderDropdown()
+    expect(snapshot.asFragment()).toMatchSnapshot()
+  })
 
   it('renders AsyncAutocomplete component', () => {
     renderDropdown()
@@ -88,14 +88,30 @@ describe('CountryDropdown', () => {
     expect(handleChange).toHaveBeenCalledWith({}, { id: 1, name: 'Ukraine' })
   })
 
-  it('passes correct props to AsyncAutocomplete', () => {
-    renderDropdown()
-    const props = mockAsyncAutocomplete.mock.calls[0][0]
+  describe('AsyncAutocomplete props', () => {
+    let props
 
-    expect(props.fullWidth).toBe(true)
-    expect(props.labelField).toBe(ctrlRenderingSettings.labelField)
-    expect(props.valueField).toBe(ctrlRenderingSettings.valueField)
-    expect(props.textFieldProps.label).toBe('common.labels.country')
+    beforeEach(() => {
+      vi.clearAllMocks()
+      renderDropdown()
+      props = mockAsyncAutocomplete.mock.calls[0][0]
+    })
+
+    it('passes fullWidth true', () => {
+      expect(props.fullWidth).toBe(true)
+    })
+
+    it('passes correct labelField', () => {
+      expect(props.labelField).toBe(ctrlRenderingSettings.labelField)
+    })
+
+    it('passes correct valueField', () => {
+      expect(props.valueField).toBe(ctrlRenderingSettings.valueField)
+    })
+
+    it('passes correct textFieldProps.label', () => {
+      expect(props.textFieldProps.label).toBe('common.labels.country')
+    })
   })
 
   it('sets fetchCondition to true initially', () => {
