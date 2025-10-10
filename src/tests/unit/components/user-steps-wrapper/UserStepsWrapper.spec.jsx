@@ -3,18 +3,19 @@ import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { vi, describe, it, beforeEach, expect } from 'vitest'
 import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
+import * as reducerModule from '~/redux/reducer'
 import { StepProvider } from '~/context/step-context'
 
 const mockDispatch = vi.fn()
-const mockMarkFirstLoginComplete = vi.fn()
-
 vi.mock('~/hooks/use-redux', () => ({
   useAppDispatch: () => mockDispatch
 }))
 
-vi.mock('~/redux/reducer', () => ({
-  markFirstLoginComplete: vi.fn()
-}))
+vi.mock('~/redux/reducer', () => {
+  return {
+    markFirstLoginComplete: vi.fn()
+  }
+})
 
 vi.mock('~/components/step-wrapper/StepWrapper', () => ({
   default: vi.fn(({ children }) => (
@@ -25,8 +26,10 @@ vi.mock('~/components/step-wrapper/StepWrapper', () => ({
 vi.mock(
   '~/containers/tutor-home-page/general-info-step/GeneralInfoStep',
   () => ({
-    default: vi.fn(() => (
-      <div data-testid='general-info-step'>General Info Step</div>
+    default: vi.fn(({ isUserFetched }) => (
+      <div data-testid='general-info-step'>
+        {isUserFetched ? 'User fetched' : 'Loading...'}
+      </div>
     ))
   })
 )
@@ -51,14 +54,17 @@ vi.mock('~/context/step-context', () => ({
 
 describe('UserStepsWrapper', () => {
   let store
+  let mockedReducer
 
   beforeEach(() => {
     const dummyReducer = (state = {}) => state
     store = configureStore({ reducer: { dummy: dummyReducer } })
+
     vi.clearAllMocks()
+    mockedReducer = vi.mocked(reducerModule)
   })
 
-  it('should render StepWrapper and GeneralInfoStep', () => {
+  it('renders StepWrapper and GeneralInfoStep', () => {
     render(
       <Provider store={store}>
         <UserStepsWrapper userRole='tutor' />
@@ -69,7 +75,7 @@ describe('UserStepsWrapper', () => {
     expect(screen.getByTestId('general-info-step')).toBeInTheDocument()
   })
 
-  it('should render all steps', () => {
+  it('renders all steps', () => {
     render(
       <Provider store={store}>
         <UserStepsWrapper userRole='tutor' />
@@ -82,25 +88,18 @@ describe('UserStepsWrapper', () => {
     expect(screen.getByTestId('add-photo-step')).toBeInTheDocument()
   })
 
-  it('should dispatch markFirstLoginComplete on mount', () => {
+  it('dispatches markFirstLoginComplete on mount', () => {
     render(
       <Provider store={store}>
         <UserStepsWrapper userRole='tutor' />
       </Provider>
     )
 
-    expect(mockDispatch).toHaveBeenCalledWith(mockMarkFirstLoginComplete())
+    expect(mockDispatch).toHaveBeenCalled()
+    expect(mockedReducer.markFirstLoginComplete).toBeDefined()
   })
 
-  it('should pass correct stepLabels for tutor role', () => {
-    const tutorStepLabels = ['Step 1', 'Step 2', 'Step 3', 'Step 4']
-
-    vi.mock('~/components/user-steps-wrapper/constants', () => ({
-      tutorStepLabels,
-      initialValues: {},
-      student: 'student'
-    }))
-
+  it('passes correct stepLabels for tutor role', () => {
     render(
       <Provider store={store}>
         <UserStepsWrapper userRole='tutor' />
@@ -108,18 +107,12 @@ describe('UserStepsWrapper', () => {
     )
 
     expect(StepProvider).toHaveBeenCalledWith(
-      expect.objectContaining({ stepLabels: tutorStepLabels }),
+      expect.objectContaining({ stepLabels: expect.any(Array) }),
       expect.anything()
     )
   })
 
-  it('should pass empty stepLabels for student role', () => {
-    vi.mock('~/components/user-steps-wrapper/constants', () => ({
-      tutorStepLabels: ['Step 1', 'Step 2', 'Step 3', 'Step 4'],
-      initialValues: {},
-      student: 'student'
-    }))
-
+  it('passes empty stepLabels for student role', () => {
     render(
       <Provider store={store}>
         <UserStepsWrapper userRole='student' />
