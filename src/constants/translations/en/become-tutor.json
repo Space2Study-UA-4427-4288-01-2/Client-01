@@ -9,11 +9,11 @@
     "textFieldLabel": "Text here"
   },
   "languages": {
-    "title": "Velit officia consequat duis enim velit mollit. Other categories you can add in your account settings later.",
+    "title": "Please choose the main subjects based on the category. You can add others later.",
     "autocompleteLabel": "Your native language"
   },
   "categories": {
-    "title": "Velit officia consequat duis enim velit mollit. Other categories you can add in your account settings later.",
+    "title": "Please choose the main subjects based on the category. You can add others later.",
     "mainSubjectsLabel": "Main Tutoring Category",
     "subjectLabel": "Subject",
     "btnText": "Add one more subject",
