@@ -1,12 +1,9 @@
-import { useCallback, useEffect, useMemo } from 'react'
-
+import { useCallback, useEffect } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
 import { useModalContext } from '~/context/modal-context'
-
 import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import FindBlock from '~/components/find-block/FindBlock'
-
 import { styles } from '~/pages/tutor-home/TutorHome.styles'
 import { translationKey } from '~/components/find-block/find-student-constants'
 import { UserRole } from '~/types'
@@ -17,26 +14,21 @@ const TutorHome = () => {
   const { openModal, closeModal } = useModalContext()
   const { checkConfirmation } = useConfirm()
   const { t } = useTranslation()
-  const confirmConfig = useMemo(
-    () => ({
-      message: 'questions.unsavedChanges',
-      title: 'titles.confirmTitle',
-      confirmButton: t('common.yes'),
-      cancelButton: t('common.no'),
-      check: true
-    }),
-    [t]
-  )
   const { isFirstLogin, userRole, userId } = useAppSelector(
     (state) => state.appMain
   )
 
   const handleCloseWithConfirm = useCallback(async () => {
-    const confirmed = checkConfirmation(confirmConfig)
-    if (await confirmed) {
-      closeModal()
-    }
-  }, [checkConfirmation, closeModal, confirmConfig])
+    const confirmed = checkConfirmation({
+      confirmButton: t('common.yes'),
+      cancelButton: t('common.no'),
+      title: 'titles.confirmTitle',
+      message: 'questions.unsavedChanges',
+      check: true
+    })
+    if (await confirmed) closeModal()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checkConfirmation, closeModal]) // t is missed
 
   useEffect(() => {
     if (!isFirstLogin) {
@@ -44,10 +36,8 @@ const TutorHome = () => {
         component: (
           <UserStepsWrapper userId={userId} userRole={userRole as UserRole} />
         ),
-        paperProps: {
-          sx: styles.modal
-        },
-        onClose: handleCloseWithConfirm
+        paperProps: { sx: styles.modal },
+        onClose: () => void handleCloseWithConfirm()
       })
     }
   }, [openModal, isFirstLogin, userRole, userId, handleCloseWithConfirm])
