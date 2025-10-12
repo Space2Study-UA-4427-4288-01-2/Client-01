@@ -9,12 +9,12 @@ import { NameItem } from '~/types'
 import { ctrlRenderingSettings } from '~/constants/components'
 import { cityService } from '~/services/city-service'
 
-interface CityDropdown {
+interface CityDropdownProps {
   city: string | null
   onChange: (_: SyntheticEvent, value: NameItem | null) => void
 }
 
-const CityDropdown = ({ city, onChange: onCityChange }: CityDropdown) => {
+const CityDropdown = ({ city, onChange: onCityChange }: CityDropdownProps) => {
   const [isFetched, setIsFetched] = useState<boolean>(false)
   const { t } = useTranslation()
 

@@ -17,7 +17,7 @@ describe('countryService', () => {
 
   describe('getCountries', () => {
     it('should call axiosClient.get with correct URL and params', async () => {
-      const mockResponse = { data: [{ id: 1, name: 'Ukraine' }] }
+      const mockResponse = { data: [{ _id: '1', name: 'Ukraine' }] }
       axiosClient.get.mockResolvedValueOnce(mockResponse)
 
       const params = { name: 'Ua' }

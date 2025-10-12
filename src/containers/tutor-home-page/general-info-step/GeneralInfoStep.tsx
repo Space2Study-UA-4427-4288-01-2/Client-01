@@ -19,8 +19,8 @@ interface GeneralInfoStepProps {
 interface StepGeneralInfoData {
   firstName: string
   lastName: string
-  country: NameItem | null
-  city: NameItem | null
+  country: string | null
+  city: string | null
   professionalSummary: string
 }
 

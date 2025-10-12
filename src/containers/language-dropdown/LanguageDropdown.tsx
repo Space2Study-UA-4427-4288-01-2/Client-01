@@ -9,7 +9,7 @@ import { NameItem } from '~/types'
 import { ctrlRenderingSettings } from '~/constants/components'
 import { languageService } from '~/services/language-service'
 
-interface LanguageDropdown {
+interface LanguageDropdownProps {
   language: string | null
   onChange: (_: SyntheticEvent, value: NameItem | null) => void
 }
@@ -17,7 +17,7 @@ interface LanguageDropdown {
 const LanguageDropdown = ({
   language,
   onChange: onLanguageChange
-}: LanguageDropdown) => {
+}: LanguageDropdownProps) => {
   const [isFetched, setIsFetched] = useState<boolean>(false)
   const { t } = useTranslation()
 
