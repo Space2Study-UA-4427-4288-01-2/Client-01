@@ -10,7 +10,7 @@ import { ctrlRenderingSettings } from '~/constants/components'
 import { cityService } from '~/services/city-service'
 
 interface CityDropdown {
-  city: NameItem | null
+  city: string | null
   onChange: (_: SyntheticEvent, value: NameItem | null) => void
 }
 
@@ -29,14 +29,14 @@ const CityDropdown = ({ city, onChange: onCityChange }: CityDropdown) => {
         fetchCondition={!isFetched}
         fetchOnFocus={!city}
         fullWidth
-        labelField={ctrlRenderingSettings.labelField}
+        labelField={ctrlRenderingSettings.name}
         onChange={onCityChange}
         service={getCities}
         textFieldProps={{
           label: t('common.labels.city')
         }}
         value={city}
-        valueField={ctrlRenderingSettings.valueField}
+        valueField={ctrlRenderingSettings.id}
       />
     </Box>
   )

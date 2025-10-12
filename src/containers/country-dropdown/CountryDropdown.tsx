@@ -32,14 +32,14 @@ const CountryDropdown = ({
         fetchCondition={!isFetched}
         fetchOnFocus={!country}
         fullWidth
-        labelField={ctrlRenderingSettings.labelField}
+        labelField={ctrlRenderingSettings.name}
         onChange={onCountryChange}
         service={getCountries}
         textFieldProps={{
           label: t('common.labels.country')
         }}
         value={country}
-        valueField={ctrlRenderingSettings.valueField}
+        valueField={ctrlRenderingSettings.id}
       />
     </Box>
   )

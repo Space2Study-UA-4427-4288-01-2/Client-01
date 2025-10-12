@@ -102,11 +102,11 @@ describe('CountryDropdown', () => {
     })
 
     it('passes correct labelField', () => {
-      expect(props.labelField).toBe(ctrlRenderingSettings.labelField)
+      expect(props.labelField).toBe(ctrlRenderingSettings.name)
     })
 
     it('passes correct valueField', () => {
-      expect(props.valueField).toBe(ctrlRenderingSettings.valueField)
+      expect(props.valueField).toBe(ctrlRenderingSettings.id)
     })
 
     it('passes correct textFieldProps.label', () => {

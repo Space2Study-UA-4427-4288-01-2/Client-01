@@ -93,8 +93,8 @@ describe('CityDropdown', () => {
     const props = mockAsyncAutocomplete.mock.calls[0][0]
 
     expect(props.fullWidth).toBe(true)
-    expect(props.labelField).toBe(ctrlRenderingSettings.labelField)
-    expect(props.valueField).toBe(ctrlRenderingSettings.valueField)
+    expect(props.labelField).toBe(ctrlRenderingSettings.name)
+    expect(props.valueField).toBe(ctrlRenderingSettings.id)
     expect(props.textFieldProps.label).toBe('common.labels.city')
   })
 

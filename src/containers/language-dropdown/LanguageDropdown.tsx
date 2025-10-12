@@ -32,14 +32,14 @@ const LanguageDropdown = ({
         fetchCondition={!isFetched}
         fetchOnFocus={!language}
         fullWidth
-        labelField={ctrlRenderingSettings.labelField}
+        labelField={ctrlRenderingSettings.name}
         onChange={onLanguageChange}
         service={getLanguages}
         textFieldProps={{
           label: t('becomeTutor.language.autocompleteLabel')
         }}
         value={language}
-        valueField={ctrlRenderingSettings.labelField}
+        valueField={ctrlRenderingSettings.name}
       />
     </Box>
   )
