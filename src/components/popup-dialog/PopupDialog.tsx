@@ -13,7 +13,7 @@ interface PopupDialogProps {
   paperProps: PaperProps
   timerId: NodeJS.Timeout | null
   closeModalAfterDelay: (delay?: number) => void
-  onClose?: () => void
+  onClose?: () => void | Promise<void>
 }
 
 const PopupDialog: FC<PopupDialogProps> = ({
