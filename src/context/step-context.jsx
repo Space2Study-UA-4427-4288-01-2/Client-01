@@ -30,7 +30,7 @@ const StepProvider = ({ children, initialValues, stepLabels }) => {
         country: user.address?.country,
         professionalSummary: user.professionalSummary
       },
-      errors: []
+      errors: {}
     })
     setLanguage(user.nativeLanguage || 'Ukrainian')
   }, [initialValues])
