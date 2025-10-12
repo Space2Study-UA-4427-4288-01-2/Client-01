@@ -20,11 +20,17 @@ export const styles = {
     m: { sm: 0, xs: '0 auto' }
   },
   rigthBox: {
+    width: '100%',
     maxWidth: '432px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     m: { md: 0, xs: '0 auto' },
     pt: 0
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px'
   }
 }

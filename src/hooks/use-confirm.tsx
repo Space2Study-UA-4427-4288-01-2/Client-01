@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useCallback, useContext, useEffect } from 'react'
 import { ConfirmationDialogContext } from '~/context/confirm-context'
 
 interface ConfirmationDialogProps {
@@ -39,27 +39,30 @@ const useConfirm = (): UseConfirmResult => {
     }
   }, [setNeedConfirmation])
 
-  const checkConfirmation = ({
-    message,
-    title,
-    confirmButton,
-    cancelButton,
-    check
-  }: ConfirmationDialogProps): boolean | Promise<boolean> => {
-    if (needConfirmation || check) {
-      return new Promise((res) => {
-        openDialog({
-          sendConfirm: res,
-          message,
-          title,
-          confirmButton,
-          cancelButton
+  const checkConfirmation = useCallback(
+    ({
+      message,
+      title,
+      confirmButton,
+      cancelButton,
+      check
+    }: ConfirmationDialogProps): boolean | Promise<boolean> => {
+      if (needConfirmation || check) {
+        return new Promise((res) => {
+          openDialog({
+            sendConfirm: res,
+            message,
+            title,
+            confirmButton,
+            cancelButton
+          })
         })
-      })
-    }
+      }
 
-    return true
-  }
+      return true
+    },
+    [needConfirmation, openDialog]
+  )
 
   return { checkConfirmation, setNeedConfirmation, openDialog }
 }
