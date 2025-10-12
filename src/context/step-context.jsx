@@ -46,7 +46,10 @@ const StepProvider = ({ children, initialValues, stepLabels }) => {
     (stepLabel, data, errors) => {
       switch (stepLabel) {
         case generalLabel:
-          setGeneralData({ data, errors })
+          setGeneralData((prev) => ({
+            data: { ...prev.data, ...data },
+            errors
+          }))
           break
         case subjectLabel:
           setSubject(data)
