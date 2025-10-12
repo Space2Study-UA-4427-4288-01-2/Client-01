@@ -33,13 +33,14 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
   const [onCloseCallback, setOnCloseCallback] = useState<
-    (() => void) | undefined
+    (() => void | Promise<void>) | undefined
   >()
 
   const closeModal = useCallback(() => {
     setModal(null)
     setPaperProps({})
     setTimer(null)
+    setOnCloseCallback(undefined)
   }, [setModal, setPaperProps, setTimer])
 
   const closeModalAfterDelay = useCallback(

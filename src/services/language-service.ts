@@ -13,7 +13,7 @@ export const languageService = {
   getLanguages: (
     params?: Partial<LanguagesParams>
   ): Promise<AxiosResponse<NameItem[]>> => {
-    return axiosClient.get(URLs.cities.get, { params })
+    return axiosClient.get(URLs.languages.get, { params })
   },
   getLanguagesMock: (): Promise<AxiosResponse<NameItem[]>> => {
     return Promise.resolve({

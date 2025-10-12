@@ -33,6 +33,9 @@ export const URLs = {
   countries: {
     get: '/countries'
   },
+  languages: {
+    get: '/languages'
+  },
   resources: {
     questions: {
       get: '/questions',

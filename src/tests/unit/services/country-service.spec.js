@@ -15,7 +15,7 @@ describe('countryService', () => {
     vi.clearAllMocks()
   })
 
-  describe('getCoutries', () => {
+  describe('getCountries', () => {
     it('should call axiosClient.get with correct URL and params', async () => {
       const mockResponse = { data: [{ id: 1, name: 'Ukraine' }] }
       axiosClient.get.mockResolvedValueOnce(mockResponse)
@@ -42,7 +42,7 @@ describe('countryService', () => {
     })
   })
 
-  describe('getCoutriesMock', () => {
+  describe('getCountriesMock', () => {
     it('should return a resolved promise with mocked countries', async () => {
       const result = await countryService.getCountriesMock()
       expect(result.data).toEqual(countries)
