@@ -10,7 +10,7 @@ import { ctrlRenderingSettings } from '~/constants/components'
 import { countryService } from '~/services/country-service'
 
 interface CountryDropdown {
-  country: NameItem | null
+  country: string | null
   onChange: (_: SyntheticEvent, value: NameItem | null) => void
 }
 
@@ -23,7 +23,7 @@ const CountryDropdown = ({
 
   const getCountries = useCallback(() => {
     setIsFetched(true)
-    return countryService.getCoutriesMock()
+    return countryService.getCountriesMock()
   }, [setIsFetched])
 
   return (

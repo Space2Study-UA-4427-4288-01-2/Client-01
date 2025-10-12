@@ -10,12 +10,12 @@ export interface CountriesParams extends RequestParams {
 }
 
 export const countryService = {
-  getCoutries: (
+  getCountries: (
     params?: Partial<CountriesParams>
   ): Promise<AxiosResponse<NameItem[]>> => {
     return axiosClient.get(URLs.countries.get, { params })
   },
-  getCoutriesMock: (): Promise<AxiosResponse<NameItem[]>> => {
+  getCountriesMock: (): Promise<AxiosResponse<NameItem[]>> => {
     return Promise.resolve({
       data: countries
     } as AxiosResponse)

@@ -34,7 +34,7 @@ const LanguageStep = ({ btnsBox }) => {
       <Box sx={styles.imgContainer}>
         <Box component='img' src={img} sx={styles.img} />
       </Box>
-      <Box sx={styles.rigthBox}>
+      <Box sx={styles.rightBox}>
         <Box sx={styles.form}>
           {formHeader()}
           <LanguageDropdown

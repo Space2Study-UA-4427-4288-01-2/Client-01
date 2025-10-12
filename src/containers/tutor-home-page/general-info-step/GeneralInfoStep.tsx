@@ -135,7 +135,7 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
         <Box component='img' src={img} />
       </Box>
 
-      <Box sx={styles.rigthBox}>
+      <Box sx={styles.rightBox}>
         <Box sx={styles.formBox}>
           {formHeader()}
           <Box sx={styles.formLine}>{formFirstLine()}</Box>

@@ -21,7 +21,7 @@ describe('countryService', () => {
       axiosClient.get.mockResolvedValueOnce(mockResponse)
 
       const params = { name: 'Ua' }
-      const result = await countryService.getCoutries(params)
+      const result = await countryService.getCountries(params)
 
       expect(axiosClient.get).toHaveBeenCalledWith(URLs.countries.get, {
         params
@@ -33,7 +33,7 @@ describe('countryService', () => {
       const mockResponse = { data: [] }
       axiosClient.get.mockResolvedValueOnce(mockResponse)
 
-      const result = await countryService.getCoutries()
+      const result = await countryService.getCountries()
 
       expect(axiosClient.get).toHaveBeenCalledWith(URLs.countries.get, {
         params: undefined
@@ -44,12 +44,12 @@ describe('countryService', () => {
 
   describe('getCoutriesMock', () => {
     it('should return a resolved promise with mocked countries', async () => {
-      const result = await countryService.getCoutriesMock()
+      const result = await countryService.getCountriesMock()
       expect(result.data).toEqual(countries)
     })
 
     it('should return an object with data property', async () => {
-      const result = await countryService.getCoutriesMock()
+      const result = await countryService.getCountriesMock()
       expect(result).toHaveProperty('data')
       expect(Array.isArray(result.data)).toBe(true)
     })

@@ -12,7 +12,7 @@ import { PaperProps } from '@mui/material/Paper'
 interface Component {
   component: React.ReactElement
   paperProps?: PaperProps
-  onClose?: () => void
+  onClose?: () => void | Promise<void>
 }
 
 interface ModalProvideContext {

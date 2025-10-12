@@ -10,7 +10,7 @@ import { ctrlRenderingSettings } from '~/constants/components'
 import { languageService } from '~/services/language-service'
 
 interface LanguageDropdown {
-  language: NameItem | null
+  language: string | null
   onChange: (_: SyntheticEvent, value: NameItem | null) => void
 }
 
@@ -21,7 +21,7 @@ const LanguageDropdown = ({
   const [isFetched, setIsFetched] = useState<boolean>(false)
   const { t } = useTranslation()
 
-  const getCities = useCallback(() => {
+  const getLanguages = useCallback(() => {
     setIsFetched(true)
     return languageService.getLanguagesMock()
   }, [setIsFetched])
@@ -34,7 +34,7 @@ const LanguageDropdown = ({
         fullWidth
         labelField={ctrlRenderingSettings.labelField}
         onChange={onLanguageChange}
-        service={getCities}
+        service={getLanguages}
         textFieldProps={{
           label: t('becomeTutor.language.autocompleteLabel')
         }}

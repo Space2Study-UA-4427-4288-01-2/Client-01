@@ -16,7 +16,7 @@ export const styles = {
     aspectRatio: { xs: '4/3', sm: 'auto' },
     pb: { xs: '16px', sm: '52px' }
   },
-  rigthBox: {
+  rightBox: {
     minWidth: '350px',
     maxWidth: '430px',
     display: 'flex',

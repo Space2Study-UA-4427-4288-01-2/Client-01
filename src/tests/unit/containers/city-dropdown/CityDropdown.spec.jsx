@@ -4,7 +4,7 @@ const { mockAsyncAutocomplete } = vi.hoisted(() => ({
   mockAsyncAutocomplete: vi.fn((props) => (
     <div
       data-testid='async-autocomplete'
-      onClick={() => props.onChange({}, { id: 1, name: 'Kyiv' })}
+      onClick={() => props.onChange({}, { _id: 1, name: 'Kyiv' })}
     >
       AsyncAutocompleteMock
     </div>
@@ -65,7 +65,7 @@ describe('CityDropdown', () => {
   })
 
   it('should call cityService.getCitiesMock once when service function is invoked', async () => {
-    const mockResponse = { data: [{ id: 1, name: 'Kyiv' }] }
+    const mockResponse = { data: [{ _id: 1, name: 'Kyiv' }] }
     cityService.getCitiesMock.mockResolvedValueOnce(mockResponse)
 
     renderDropdown()
@@ -85,7 +85,7 @@ describe('CityDropdown', () => {
     const auto = screen.getByTestId('async-autocomplete')
     fireEvent.click(auto)
 
-    expect(handleChange).toHaveBeenCalledWith({}, { id: 1, name: 'Kyiv' })
+    expect(handleChange).toHaveBeenCalledWith({}, { _id: 1, name: 'Kyiv' })
   })
 
   it('passes correct props to AsyncAutocomplete', () => {
