@@ -1,10 +1,13 @@
 import { Box } from '@mui/material'
 
 import { style } from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep.style'
+interface SubjectsStepProps {
+  btnsBox?: React.ReactNode
+}
 
-const AddPhotoStep = ({ btnsBox }) => {
+const AddPhotoStep: React.FC<SubjectsStepProps> = ({ btnsBox }) => {
   return (
-    <Box sx={style.root}>
+    <Box data-testid='add-photo-step' sx={style.root}>
       AddPhoto step
       {btnsBox}
     </Box>

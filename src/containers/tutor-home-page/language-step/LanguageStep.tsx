@@ -3,9 +3,13 @@ import Box from '@mui/material/Box'
 import { styles } from '~/containers/tutor-home-page/language-step/LanguageStep.styles'
 import img from '~/assets/img/tutor-home-page/become-tutor/languages.svg'
 
-const LanguageStep = ({ btnsBox }) => {
+interface SubjectsStepProps {
+  btnsBox?: React.ReactNode
+}
+
+const LanguageStep: React.FC<SubjectsStepProps> = ({ btnsBox }) => {
   return (
-    <Box sx={styles.container}>
+    <Box data-testid='language-step' sx={styles.container}>
       <Box sx={styles.imgContainer}>
         <Box component='img' src={img} sx={styles.img} />
       </Box>
