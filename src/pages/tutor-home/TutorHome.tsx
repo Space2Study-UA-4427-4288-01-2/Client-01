@@ -31,7 +31,7 @@ const TutorHome = () => {
   }, [checkConfirmation, closeModal]) // t is missed
 
   useEffect(() => {
-    if (!isFirstLogin) {
+    if (isFirstLogin) {
       openModal({
         component: (
           <UserStepsWrapper userId={userId} userRole={userRole as UserRole} />
