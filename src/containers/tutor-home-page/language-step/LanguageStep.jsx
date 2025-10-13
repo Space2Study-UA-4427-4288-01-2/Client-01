@@ -19,7 +19,7 @@ const LanguageStep = ({ btnsBox }) => {
 
   const handleDropDownChange = useCallback(
     (_, value) => {
-      handleStepData('language', value.name)
+      handleStepData('language', value?.name ?? null)
     },
     [handleStepData]
   )
