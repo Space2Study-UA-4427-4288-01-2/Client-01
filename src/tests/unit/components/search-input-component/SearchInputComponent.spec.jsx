@@ -37,7 +37,7 @@ describe('SearchInput', () => {
     expect(mockSetSearch).toHaveBeenCalledWith('')
   })
 
-  it('should call setState with empty string when delete icon is clicked', () => {
+  it('should call setSearch with empty string when delete icon is clicked', () => {
     renderComponent({ search: 'test' })
     const deleteIcon = screen.getByTestId('delete-icon')
     fireEvent.click(deleteIcon)
