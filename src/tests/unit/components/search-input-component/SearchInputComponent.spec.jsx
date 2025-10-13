@@ -2,6 +2,7 @@ import { afterEach, vi } from 'vitest'
 import { fireEvent, screen } from '@testing-library/react'
 import SearchInput from '~/components/search-input/SearchInput'
 import { renderWithProviders } from '~tests/test-utils'
+import '@testing-library/jest-dom/vitest'
 
 describe('SearchInput', () => {
   const mockSetSearch = vi.fn()
