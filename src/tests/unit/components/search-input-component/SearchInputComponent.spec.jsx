@@ -80,12 +80,4 @@ describe('SearchInput', () => {
     await userEvent.keyboard('{Enter}')
     expect(mockSetSearch).toHaveBeenCalledWith('typed search')
   })
-
-  it('should call setSearch with current input value when enter is pressed after typing', () => {
-    renderComponent()
-    const input = screen.getByRole('textbox')
-    fireEvent.change(input, { target: { value: 'typed search' } })
-    fireEvent.keyPress(input, { key: 'Enter', charCode: 13 })
-    expect(mockSetSearch).toHaveBeenCalledWith('typed search')
-  })
 })
