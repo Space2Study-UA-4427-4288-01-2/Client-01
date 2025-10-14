@@ -4,18 +4,15 @@ import { configureStore } from '@reduxjs/toolkit'
 import { vi, describe, it, beforeEach, expect } from 'vitest'
 import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
 import * as reducerModule from '~/redux/reducer'
-import { StepProvider } from '~/context/step-context'
 
 const mockDispatch = vi.fn()
 vi.mock('~/hooks/use-redux', () => ({
   useAppDispatch: () => mockDispatch
 }))
 
-vi.mock('~/redux/reducer', () => {
-  return {
-    markFirstLoginComplete: vi.fn()
-  }
-})
+vi.mock('~/redux/reducer', () => ({
+  markFirstLoginComplete: vi.fn()
+}))
 
 vi.mock('~/components/step-wrapper/StepWrapper', () => ({
   default: vi.fn(({ children }) => (
@@ -46,10 +43,11 @@ vi.mock('~/containers/tutor-home-page/add-photo-step/AddPhotoStep', () => ({
   default: vi.fn(() => <div data-testid='add-photo-step'>Add Photo Step</div>)
 }))
 
+const mockStepProvider = vi.fn(({ children }) => (
+  <div data-testid='step-provider'>{children}</div>
+))
 vi.mock('~/context/step-context', () => ({
-  StepProvider: vi.fn(({ children }) => (
-    <div data-testid='step-provider'>{children}</div>
-  ))
+  StepProvider: mockStepProvider
 }))
 
 describe('UserStepsWrapper', () => {
@@ -59,7 +57,6 @@ describe('UserStepsWrapper', () => {
   beforeEach(() => {
     const dummyReducer = (state = {}) => state
     store = configureStore({ reducer: { dummy: dummyReducer } })
-
     vi.clearAllMocks()
     mockedReducer = vi.mocked(reducerModule)
   })
@@ -75,7 +72,7 @@ describe('UserStepsWrapper', () => {
     expect(screen.getByTestId('general-info-step')).toBeInTheDocument()
   })
 
-  it('renders all steps', () => {
+  it('renders all child steps', () => {
     render(
       <Provider store={store}>
         <UserStepsWrapper userRole='tutor' />
@@ -106,8 +103,11 @@ describe('UserStepsWrapper', () => {
       </Provider>
     )
 
-    expect(StepProvider).toHaveBeenCalledWith(
-      expect.objectContaining({ stepLabels: expect.any(Array) }),
+    expect(mockStepProvider).toHaveBeenCalledWith(
+      expect.objectContaining({
+        initialValues: expect.any(Object),
+        stepLabels: expect.any(Array)
+      }),
       expect.anything()
     )
   })
@@ -119,8 +119,11 @@ describe('UserStepsWrapper', () => {
       </Provider>
     )
 
-    expect(StepProvider).toHaveBeenCalledWith(
-      expect.objectContaining({ stepLabels: '' }),
+    expect(mockStepProvider).toHaveBeenCalledWith(
+      expect.objectContaining({
+        initialValues: expect.any(Object),
+        stepLabels: ''
+      }),
       expect.anything()
     )
   })
