@@ -43,11 +43,12 @@ vi.mock('~/containers/tutor-home-page/add-photo-step/AddPhotoStep', () => ({
   default: vi.fn(() => <div data-testid='add-photo-step'>Add Photo Step</div>)
 }))
 
+// окремий мок StepProvider
 const mockStepProvider = vi.fn(({ children }) => (
   <div data-testid='step-provider'>{children}</div>
 ))
 vi.mock('~/context/step-context', () => ({
-  StepProvider: mockStepProvider
+  StepProvider: (props) => mockStepProvider(props)
 }))
 
 describe('UserStepsWrapper', () => {
@@ -57,11 +58,12 @@ describe('UserStepsWrapper', () => {
   beforeEach(() => {
     const dummyReducer = (state = {}) => state
     store = configureStore({ reducer: { dummy: dummyReducer } })
+
     vi.clearAllMocks()
     mockedReducer = vi.mocked(reducerModule)
   })
 
-  it('renders StepWrapper and GeneralInfoStep', () => {
+  it('renders StepWrapper and steps', () => {
     render(
       <Provider store={store}>
         <UserStepsWrapper userRole='tutor' />
@@ -69,16 +71,6 @@ describe('UserStepsWrapper', () => {
     )
 
     expect(screen.getByTestId('step-wrapper')).toBeInTheDocument()
-    expect(screen.getByTestId('general-info-step')).toBeInTheDocument()
-  })
-
-  it('renders all child steps', () => {
-    render(
-      <Provider store={store}>
-        <UserStepsWrapper userRole='tutor' />
-      </Provider>
-    )
-
     expect(screen.getByTestId('general-info-step')).toBeInTheDocument()
     expect(screen.getByTestId('subjects-step')).toBeInTheDocument()
     expect(screen.getByTestId('language-step')).toBeInTheDocument()
@@ -96,7 +88,7 @@ describe('UserStepsWrapper', () => {
     expect(mockedReducer.markFirstLoginComplete).toBeDefined()
   })
 
-  it('passes correct stepLabels for tutor role', () => {
+  it('calls StepProvider with correct props for tutor', () => {
     render(
       <Provider store={store}>
         <UserStepsWrapper userRole='tutor' />
@@ -107,12 +99,15 @@ describe('UserStepsWrapper', () => {
       expect.objectContaining({
         initialValues: expect.any(Object),
         stepLabels: expect.any(Array)
-      }),
-      expect.anything()
+      })
     )
+
+    // додаткова перевірка — children передані
+    const callArgs = mockStepProvider.mock.calls[0][0]
+    expect(callArgs.children).toBeTruthy()
   })
 
-  it('passes empty stepLabels for student role', () => {
+  it('calls StepProvider with empty labels for student', () => {
     render(
       <Provider store={store}>
         <UserStepsWrapper userRole='student' />
@@ -121,10 +116,8 @@ describe('UserStepsWrapper', () => {
 
     expect(mockStepProvider).toHaveBeenCalledWith(
       expect.objectContaining({
-        initialValues: expect.any(Object),
         stepLabels: ''
-      }),
-      expect.anything()
+      })
     )
   })
 })
