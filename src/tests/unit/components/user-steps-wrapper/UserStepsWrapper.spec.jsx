@@ -43,7 +43,6 @@ vi.mock('~/containers/tutor-home-page/add-photo-step/AddPhotoStep', () => ({
   default: vi.fn(() => <div data-testid='add-photo-step'>Add Photo Step</div>)
 }))
 
-// окремий мок StepProvider
 const mockStepProvider = vi.fn(({ children }) => (
   <div data-testid='step-provider'>{children}</div>
 ))
@@ -102,7 +101,6 @@ describe('UserStepsWrapper', () => {
       })
     )
 
-    // додаткова перевірка — children передані
     const callArgs = mockStepProvider.mock.calls[0][0]
     expect(callArgs.children).toBeTruthy()
   })
