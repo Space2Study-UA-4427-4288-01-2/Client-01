@@ -1,5 +1,10 @@
 import { Offer, UserResponse, UserRoleEnum } from '~/types'
 
+export interface NameItem {
+  _id: string
+  name: string
+}
+
 export interface ItemsWithCount<T> {
   count: number
   items: T[]
@@ -20,33 +25,23 @@ export interface DataByRole<T> {
   [UserRoleEnum.Tutor]: T
 }
 
-export interface CategoryInterface {
-  _id: string
-  name: string
+export interface CategoryInterface extends NameItem {
   appearance: CategoryAppearance
   totalOffers: DataByRole<number>
   createdAt: string
   updatedAt: string
 }
 
-export interface CategoryNameInterface {
-  _id: string
-  name: string
-}
+export interface CategoryNameInterface extends NameItem {}
 
-export interface SubjectInterface {
-  _id: string
-  name: string
+export interface SubjectInterface extends NameItem {
   category: string
   totalOffers: DataByRole<number>
   createdAt: string
   updatedAt: string
 }
 
-export interface SubjectNameInterface {
-  _id: string
-  name: string
-}
+export interface SubjectNameInterface extends NameItem {}
 
 export interface ReviewInterface {
   offer: Offer

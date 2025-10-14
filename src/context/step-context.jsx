@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+  useEffect
+} from 'react'
 
 const StepContext = createContext()
 
@@ -12,6 +18,23 @@ const StepProvider = ({ children, initialValues, stepLabels }) => {
   const [photo, setPhoto] = useState([])
   const [generalLabel, subjectLabel, languageLabel, photoLabel] = stepLabels
 
+  useEffect(() => {
+    const user = initialValues
+    if (!user) return
+
+    setGeneralData({
+      data: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        city: user.address?.city,
+        country: user.address?.country,
+        professionalSummary: user.professionalSummary
+      },
+      errors: {}
+    })
+    setLanguage(user.nativeLanguage || 'Ukrainian')
+  }, [initialValues])
+
   const stepData = {
     [generalLabel]: generalData,
     [subjectLabel]: subject,
@@ -23,7 +46,10 @@ const StepProvider = ({ children, initialValues, stepLabels }) => {
     (stepLabel, data, errors) => {
       switch (stepLabel) {
         case generalLabel:
-          setGeneralData({ data, errors })
+          setGeneralData((prev) => ({
+            data: { ...prev.data, ...data },
+            errors
+          }))
           break
         case subjectLabel:
           setSubject(data)

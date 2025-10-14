@@ -12,6 +12,7 @@ import { PaperProps } from '@mui/material/Paper'
 interface Component {
   component: React.ReactElement
   paperProps?: PaperProps
+  onClose?: () => void | Promise<void>
 }
 
 interface ModalProvideContext {
@@ -31,11 +32,15 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [modal, setModal] = useState<React.ReactElement | null>(null)
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+  const [onCloseCallback, setOnCloseCallback] = useState<
+    (() => void | Promise<void>) | undefined
+  >()
 
   const closeModal = useCallback(() => {
     setModal(null)
     setPaperProps({})
     setTimer(null)
+    setOnCloseCallback(undefined)
   }, [setModal, setPaperProps, setTimer])
 
   const closeModalAfterDelay = useCallback(
@@ -47,8 +52,9 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   )
 
   const openModal = useCallback(
-    ({ component, paperProps }: Component, delayToClose?: number) => {
+    ({ component, paperProps, onClose }: Component, delayToClose?: number) => {
       setModal(component)
+      setOnCloseCallback(() => onClose)
 
       paperProps && setPaperProps(paperProps)
       delayToClose && closeModalAfterDelay(delayToClose)
@@ -68,6 +74,7 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
         <PopupDialog
           closeModalAfterDelay={closeModalAfterDelay}
           content={modal}
+          onClose={onCloseCallback ?? closeModal}
           paperProps={paperProps}
           timerId={timer}
         />

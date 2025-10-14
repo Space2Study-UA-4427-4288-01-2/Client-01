@@ -27,6 +27,15 @@ export const URLs = {
     get: '/subjects',
     getNames: '/subjects/names'
   },
+  cities: {
+    get: '/cities'
+  },
+  countries: {
+    get: '/countries'
+  },
+  languages: {
+    get: '/languages'
+  },
   resources: {
     questions: {
       get: '/questions',

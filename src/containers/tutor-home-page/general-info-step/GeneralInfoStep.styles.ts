@@ -6,31 +6,38 @@ export const styles = {
     justifyContent: 'space-between',
     gap: '40px',
     height: { sm: '485px' },
+    paddingBottom: { xs: '30px', sm: '0' },
     ...fadeAnimation
   },
   imgContainer: {
     display: 'flex',
-    flex: 1,
+    flexShrink: 0,
     maxWidth: '432px',
     aspectRatio: { xs: '4/3', sm: 'auto' },
     pb: { xs: '16px', sm: '52px' }
   },
-  img: {
-    width: '100%',
-    m: { sm: 0, xs: '0 auto' }
-  },
   rightBox: {
-    width: '100%',
-    maxWidth: '432px',
+    minWidth: '350px',
+    maxWidth: '430px',
     display: 'flex',
     flexDirection: 'column',
+    gap: '12px',
     justifyContent: 'space-between',
     m: { md: 0, xs: '0 auto' },
-    pt: 0
+    pt: 0,
+    ml: { md: '40px', xs: '20px' }
   },
-  form: {
+  formBox: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '24px'
+    gap: '6px'
+  },
+  formLine: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '12px'
+  },
+  textArea: {
+    mt: '28px'
   }
 }

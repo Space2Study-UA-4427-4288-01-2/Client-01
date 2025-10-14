@@ -1,0 +1,22 @@
+export const cities = [
+  { _id: '1', name: 'Kyiv' },
+  { _id: '2', name: 'Kharkiv' },
+  { _id: '3', name: 'Odesa' },
+  { _id: '4', name: 'Dnipro' },
+  { _id: '5', name: 'Lviv' },
+  { _id: '6', name: 'Zaporizhzhia' },
+  { _id: '7', name: 'Kryvyi Rih' },
+  { _id: '8', name: 'Mykolaiv' },
+  { _id: '9', name: 'Vinnytsia' },
+  { _id: '10', name: 'Poltava' },
+  { _id: '11', name: 'Chernihiv' },
+  { _id: '12', name: 'Sumy' },
+  { _id: '13', name: 'Zhytomyr' },
+  { _id: '14', name: 'Kherson' },
+  { _id: '15', name: 'Chernivtsi' },
+  { _id: '16', name: 'Ternopil' },
+  { _id: '17', name: 'Ivano-Frankivsk' },
+  { _id: '18', name: 'Rivne' },
+  { _id: '19', name: 'Lutsk' },
+  { _id: '20', name: 'Uzhhorod' }
+]
