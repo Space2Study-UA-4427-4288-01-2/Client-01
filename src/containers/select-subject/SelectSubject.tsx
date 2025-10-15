@@ -49,6 +49,7 @@ const SelectSubject = ({
   return (
     <Box sx={styles.root}>
       <AsyncAutocomplete<NameItem>
+        data-testid='main-subject'
         fetchCondition={!isCategoriesFetched}
         fetchOnFocus
         fullWidth
@@ -63,6 +64,7 @@ const SelectSubject = ({
       />
 
       <AsyncAutocomplete<NameItem>
+        data-testid='selected-subject'
         disabled={!category}
         fetchCondition={!isSubjectFetched}
         fetchOnFocus
