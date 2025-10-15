@@ -14,12 +14,12 @@ import { useStepContext } from '~/context/step-context'
 interface SubjectsStepProps {
   btnsBox: ReactNode
 }
+const MAX_CHIPS = 2
 
 const SubjectsStep: FC<SubjectsStepProps> = ({ btnsBox }) => {
   const { t } = useTranslation()
   const { stepData, handleStepData } = useStepContext()
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null)
-  console.log(stepData, 'stepData')
 
   const formHeader = () => (
     <Typography gutterBottom variant={TypographyVariantEnum.Body1}>
@@ -29,7 +29,6 @@ const SubjectsStep: FC<SubjectsStepProps> = ({ btnsBox }) => {
 
   const handleAddSubject = useCallback(() => {
     if (selectedSubject) {
-      console.log(selectedSubject)
       handleStepData('subjects', [
         ...new Set([...stepData.subjects, selectedSubject])
       ])
@@ -65,7 +64,10 @@ const SubjectsStep: FC<SubjectsStepProps> = ({ btnsBox }) => {
             {t('becomeTutor.categories.btnText')}
           </AppButton>
 
-          <AppChipList defaultQuantity={2} items={[...stepData.subjects]} />
+          <AppChipList
+            defaultQuantity={MAX_CHIPS}
+            items={[...stepData.subjects]}
+          />
         </Box>
 
         {btnsBox}
