@@ -22,7 +22,7 @@ const SelectSubject = ({ subject, onSubjectChange }: SelectSubjectProps) => {
   const [category, setCategory] = useState<NameItem | null>(null)
   const { t } = useTranslation()
 
-  const getGategoies = useCallback(() => {
+  const getGategories = useCallback(() => {
     setIsCategoriesFetched(true)
     return ResourceService.getResourcesCategoriesNames() as Promise<
       AxiosResponse<NameItem[]>
@@ -52,7 +52,7 @@ const SelectSubject = ({ subject, onSubjectChange }: SelectSubjectProps) => {
         fullWidth
         labelField={ctrlRenderingSettings.name}
         onChange={onCategorySelected}
-        service={getGategoies}
+        service={getGategories}
         textFieldProps={{
           label: t('becomeTutor.categories.mainSubjectsLabel')
         }}
