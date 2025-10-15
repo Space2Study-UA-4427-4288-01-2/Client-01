@@ -13,13 +13,10 @@ import { subjectService } from '~/services/subject-service'
 
 interface SelectSubjectProps {
   subject: string | null
-  onChange: (_: SyntheticEvent, value: NameItem | null) => void
+  onSubjectChange: (_: SyntheticEvent, value: NameItem | null) => void
 }
 
-const SelectSubject = ({
-  subject,
-  onChange: onCategoryChanged
-}: SelectSubjectProps) => {
+const SelectSubject = ({ subject, onSubjectChange }: SelectSubjectProps) => {
   const [isCategoriesFetched, setIsCategoriesFetched] = useState<boolean>(false)
   const [isSubjectFetched, setIsSubjectFetched] = useState<boolean>(false)
   const [category, setCategory] = useState<NameItem | null>(null)
@@ -70,7 +67,7 @@ const SelectSubject = ({
         fetchOnFocus
         fullWidth
         labelField={ctrlRenderingSettings.name}
-        onChange={onCategoryChanged}
+        onChange={onSubjectChange}
         service={getSubjects}
         textFieldProps={{
           label: t('becomeTutor.categories.subjectLabel')

@@ -53,7 +53,7 @@ const SubjectsStep: FC<SubjectsStepProps> = ({ btnsBox }) => {
           {formHeader()}
 
           <SelectSubject
-            onChange={onSubjectSeclected}
+            onSubjectChange={onSubjectSeclected}
             subject={selectedSubject}
           ></SelectSubject>
 
