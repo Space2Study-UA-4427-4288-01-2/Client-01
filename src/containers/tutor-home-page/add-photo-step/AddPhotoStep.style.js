@@ -22,21 +22,34 @@ export const style = {
     flex: 1,
     pb: { xs: '16px', sm: '26px', md: '52px' }
   },
-  uploadBox: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    maxWidth: '440px',
+  previewBox: {
     width: '100%',
-    aspectRatio: '1',
-    border: '2px dashed',
-    borderColor: 'primary.200',
-    borderRadius: '20px',
-    mt: { xs: '20px', md: '0px' }
+    height: '100%',
+    objectFit: 'cover',
+    p: '12px'
   },
-  activeDrag: {
-    border: '2px primary',
-    borderColor: 'primary.900'
+  dnd: {
+    root: {
+      height: '100%',
+      width: '100%'
+    },
+    uploadBox: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      maxWidth: '440px',
+      width: '100%',
+      aspectRatio: '1',
+      border: '2px dashed',
+      borderColor: 'primary.200',
+      borderRadius: '20px',
+      mt: { xs: '20px', md: '0px' }
+    },
+    activeDrag: {
+      border: '2px primary',
+      borderColor: 'primary.900',
+      backgroundColor: '#eef7ff'
+    }
   },
   rigthBox: {
     display: 'flex',
