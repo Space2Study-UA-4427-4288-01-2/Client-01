@@ -43,11 +43,24 @@ const SubjectsStep: FC<SubjectsStepProps> = ({ btnsBox }) => {
     [setSelectedSubject]
   )
 
+  const imgBox = (
+    <Box sx={styles.imgContainer}>
+      <Box alt='study category and subject' component='img' src={img} />
+    </Box>
+  )
+
+  const addSubjectBlock = (
+    <>
+      <AppButton onClick={handleAddSubject} variant={ButtonVariantEnum.Tonal}>
+        {t('becomeTutor.categories.btnText')}
+      </AppButton>
+      <AppChipList defaultQuantity={MAX_CHIPS} items={[...stepData.subjects]} />
+    </>
+  )
+
   return (
     <Box sx={styles.container}>
-      <Box sx={styles.imgContainer}>
-        <Box alt='study category and subject' component='img' src={img} />
-      </Box>
+      {imgBox}
       <Box sx={styles.rightBox}>
         <Box sx={styles.form}>
           {formHeader()}
@@ -57,17 +70,7 @@ const SubjectsStep: FC<SubjectsStepProps> = ({ btnsBox }) => {
             subject={selectedSubject}
           ></SelectSubject>
 
-          <AppButton
-            onClick={handleAddSubject}
-            variant={ButtonVariantEnum.Tonal}
-          >
-            {t('becomeTutor.categories.btnText')}
-          </AppButton>
-
-          <AppChipList
-            defaultQuantity={MAX_CHIPS}
-            items={[...stepData.subjects]}
-          />
+          {addSubjectBlock}
         </Box>
 
         {btnsBox}
