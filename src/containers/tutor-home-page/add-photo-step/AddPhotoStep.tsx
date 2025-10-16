@@ -33,8 +33,9 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
       const reader = new FileReader()
 
       reader.onload = () => {
-        setPreviewUrl(String(reader.result))
-        handleStepData('photo', reader.result)
+        const photo = reader?.result as string
+        setPreviewUrl(String(photo))
+        handleStepData('photo', photo)
       }
 
       reader.readAsDataURL(files[0])
