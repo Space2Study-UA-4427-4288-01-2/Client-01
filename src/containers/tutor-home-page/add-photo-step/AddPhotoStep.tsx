@@ -6,6 +6,7 @@ import DragAndDrop from '~/components/drag-and-drop/DragAndDrop'
 import { Emitter, TypographyVariantEnum } from '~/types'
 import { useTranslation } from 'react-i18next'
 import FileUploader from '~/components/file-uploader/FileUploader'
+import { useStepContext } from '~/context/step-context'
 
 interface AddPhotoStepProps {
   btnsBox: ReactNode
@@ -24,21 +25,25 @@ const validationData = {
 const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [listImages, setListImages] = useState<File[]>([])
+  const { handleStepData } = useStepContext()
   const { t } = useTranslation()
 
   const handleFiles = useCallback((files: File[]) => {
-    if (files?.length > 0) {
-      const file = files[0]
+    if (files?.length) {
       const reader = new FileReader()
 
       reader.onload = () => {
-        setPreviewUrl(reader.result as string)
+        setPreviewUrl(String(reader.result))
+        handleStepData('photo', reader.result)
       }
 
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(files[0])
     } else {
       setPreviewUrl('')
+      handleStepData('photo', '')
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleOnDrop = useCallback(
@@ -48,11 +53,9 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
     [handleFiles]
   )
 
-  const emitter = useCallback(
+  const onFileUploaded = useCallback(
     ({ files }: Emitter) => {
-      setListImages(() => {
-        return [...files]
-      })
+      setListImages(() => [...files])
       handleFiles(files)
     },
     [handleFiles]
@@ -66,7 +69,7 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
 
   const dndContent = previewUrl ? (
     <Box
-      alt='Uploaded preview'
+      alt='Photo preview'
       component='img'
       src={previewUrl}
       sx={style.previewBox}
@@ -94,7 +97,7 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
           {formHeader}
           <FileUploader
             buttonText={t('becomeTutor.photo.button')}
-            emitter={emitter}
+            emitter={onFileUploaded}
             initialError={''}
             initialState={listImages}
             isImages
