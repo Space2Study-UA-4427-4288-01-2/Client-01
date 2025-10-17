@@ -13,8 +13,8 @@ interface AddPhotoStepProps {
 }
 
 const validationData = {
-  maxFileSize: 10_000_000,
-  maxAllFilesSize: 50_000_000,
+  maxFileSize: 1_000_000,
+  maxAllFilesSize: 1_000_000,
   filesTypes: ['image/jpeg', 'image/png'],
   fileSizeError: 'becomeTutor.documents.fileSizeError',
   allFilesSizeError: 'becomeTutor.documents.allFilesSizeError',
@@ -28,27 +28,35 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   const { handleStepData } = useStepContext()
   const { t } = useTranslation()
 
+  const handleFilesOnLoad = useCallback(
+    (photo: string) => {
+      setPreviewUrl(String(photo))
+      handleStepData('photo', photo)
+    },
+    [handleStepData]
+  )
+
+  const resetPhoto = useCallback(() => {
+    setPreviewUrl('')
+    handleStepData('photo', '')
+  }, [handleStepData])
+
   const handleFiles = useCallback((files: File[]) => {
     if (files?.length) {
       const reader = new FileReader()
+      reader.readAsDataURL(files[0])
 
       reader.onload = () => {
-        const photo = reader?.result as string
-        setPreviewUrl(String(photo))
-        handleStepData('photo', photo)
+        handleFilesOnLoad(reader?.result as string)
       }
-
-      reader.readAsDataURL(files[0])
     } else {
-      setPreviewUrl('')
-      handleStepData('photo', '')
+      resetPhoto()
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleOnDrop = useCallback(
-    ({ files }: { files: File[] }) => {
+    ({ files }: Emitter) => {
       handleFiles(files)
     },
     [handleFiles]
@@ -62,13 +70,14 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
     [handleFiles]
   )
 
+  // jsx elements
   const formHeader = (
     <Typography gutterBottom variant={TypographyVariantEnum.Body1}>
-      {t('becomeTutor.categories.title')}
+      {t('becomeTutor.photo.description')}
     </Typography>
   )
 
-  const dndContent = previewUrl ? (
+  const dndPlaceholderContent = previewUrl ? (
     <Box
       alt='Photo preview'
       component='img'
@@ -81,30 +90,36 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
     </Typography>
   )
 
+  const dndPhoto = (
+    <DragAndDrop
+      emitter={handleOnDrop}
+      style={style.dnd}
+      validationData={validationData}
+    >
+      {dndPlaceholderContent}
+    </DragAndDrop>
+  )
+
+  const fileUploaderControl = (
+    <FileUploader
+      buttonText={t('becomeTutor.photo.button')}
+      emitter={onFileUploaded}
+      initialError={''}
+      initialState={listImages}
+      isImages
+      sx={style.fileUploader}
+      validationData={validationData}
+    />
+  )
+
   return (
     <Box sx={style.root}>
-      <Box sx={style.imgContainer}>
-        <DragAndDrop
-          emitter={handleOnDrop}
-          style={style.dnd}
-          validationData={validationData}
-        >
-          {dndContent}
-        </DragAndDrop>
-      </Box>
+      <Box sx={style.imgContainer}>{dndPhoto}</Box>
 
       <Box sx={style.rigthBox}>
         <Box>
           {formHeader}
-          <FileUploader
-            buttonText={t('becomeTutor.photo.button')}
-            emitter={onFileUploaded}
-            initialError={''}
-            initialState={listImages}
-            isImages
-            sx={style.fileUploader}
-            validationData={validationData}
-          />
+          {fileUploaderControl}
         </Box>
 
         {btnsBox}

@@ -59,9 +59,3 @@ body ::-webkit-scrollbar-thumb {
   border-radius: var(--scrollbar-border-radius);
 }
 
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
