@@ -7,6 +7,8 @@ import { Emitter, TypographyVariantEnum } from '~/types'
 import { useTranslation } from 'react-i18next'
 import FileUploader from '~/components/file-uploader/FileUploader'
 import { useStepContext } from '~/context/step-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
+import { snackbarVariants } from '~/constants'
 
 interface AddPhotoStepProps {
   btnsBox: ReactNode
@@ -27,10 +29,11 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   const [listImages, setListImages] = useState<File[]>([])
   const { handleStepData } = useStepContext()
   const { t } = useTranslation()
+  const { setAlert } = useSnackBarContext()
 
   const handleFilesOnLoad = useCallback(
     (photo: string) => {
-      setPreviewUrl(String(photo))
+      setPreviewUrl(photo)
       handleStepData('photo', photo)
     },
     [handleStepData]
@@ -44,11 +47,19 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   const handleFiles = useCallback((files: File[]) => {
     if (files?.length) {
       const reader = new FileReader()
-      reader.readAsDataURL(files[0])
 
       reader.onload = () => {
         handleFilesOnLoad(reader?.result as string)
       }
+
+      reader.onerror = () => {
+        resetPhoto()
+        setAlert({
+          severity: snackbarVariants.error,
+          message: 'Failed to load file.'
+        })
+      }
+      reader.readAsDataURL(files[0])
     } else {
       resetPhoto()
     }
