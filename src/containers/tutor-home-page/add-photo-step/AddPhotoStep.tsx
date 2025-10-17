@@ -37,7 +37,7 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   )
 
   const resetPhoto = useCallback(() => {
-    setPreviewUrl('')
+    setPreviewUrl(null)
     handleStepData('photo', '')
   }, [handleStepData])
 
