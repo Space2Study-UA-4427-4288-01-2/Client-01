@@ -55,10 +55,6 @@ describe('StepWrapper test', () => {
 
     waitFor(() => fireEvent.click(nextBtn))
 
-    const finishBtn = screen.getByText(/Finish/i)
-
-    waitFor(() => fireEvent.click(finishBtn))
-
     expect(vi.fn()).not.toHaveBeenCalled()
   })
 

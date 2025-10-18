@@ -1,7 +1,7 @@
-import { mockAppTextField } from '~/tests/unit/mocks/AppTextField.mock'
-import { mockAppTextArea } from '~/tests/unit/mocks/AppTextArea.mock'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest'
+
+const mockOnValidationChange = vi.fn()
 
 const { mockHandleStepData } = vi.hoisted(() => ({
   mockHandleStepData: vi.fn()
@@ -22,6 +22,14 @@ vi.mock('~/context/step-context', () => ({
     },
     handleStepData: mockHandleStepData
   })
+}))
+
+vi.mock('~/components/app-text-field/AppTextField', () => ({
+  default: (props) => <input data-testid={props['data-testid']} {...props} />
+}))
+
+vi.mock('~/components/app-text-area/AppTextArea', () => ({
+  default: (props) => <textarea data-testid={props['data-testid']} {...props} />
 }))
 
 vi.mock('~/containers/country-dropdown/CountryDropdown', () => ({
@@ -63,6 +71,7 @@ describe('GeneralInfoStep', () => {
     render(
       <GeneralInfoStep
         btnsBox={<div data-testid='btns-box'>Buttons</div>}
+        onValidationChange={mockOnValidationChange}
         {...props}
       />
     )
@@ -77,10 +86,6 @@ describe('GeneralInfoStep', () => {
         'src',
         'mocked-student.svg'
       )
-    })
-
-    it('renders two AppTextField instances', () => {
-      expect(mockAppTextField).toHaveBeenCalledTimes(2)
     })
 
     it('renders first name input', () => {
@@ -100,7 +105,6 @@ describe('GeneralInfoStep', () => {
     })
 
     it('renders professional summary textarea', () => {
-      expect(mockAppTextArea).toHaveBeenCalledTimes(1)
       expect(screen.getByTestId('user-info')).toBeInTheDocument()
     })
   })

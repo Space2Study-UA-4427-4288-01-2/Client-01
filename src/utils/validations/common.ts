@@ -47,11 +47,11 @@ const validations: Validations = {
 
 export const emptyField = (
   value: string | null,
-  emptyMessage = 'common.errorMessages.emptyField',
+  emtyMessage = 'common.errorMessages.emptyField',
   helperText?: string
 ) => {
   if (!value) {
-    return emptyMessage
+    return emtyMessage
   }
   return helperText
 }
