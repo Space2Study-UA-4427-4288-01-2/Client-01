@@ -1,5 +1,71 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AppChipList (integration) > should render snapshot correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-0"
+  >
+    <div
+      class="MuiBox-root css-0"
+    >
+      <div
+        class="MuiBox-root css-1f5vcwn"
+      >
+        <div
+          class="MuiBox-root css-3bbw2c"
+        >
+          <div
+            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-1lp5v23-MuiChip-root"
+            data-testid="chip"
+          >
+            <span
+              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-1mkmy4k-MuiTypography-root"
+              >
+                One
+              </p>
+            </span>
+          </div>
+          <div
+            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-1lp5v23-MuiChip-root"
+            data-testid="chip"
+          >
+            <span
+              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-1mkmy4k-MuiTypography-root"
+              >
+                Two
+              </p>
+            </span>
+          </div>
+          <div
+            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-1lp5v23-MuiChip-root"
+            data-testid="chip"
+          >
+            <span
+              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-1mkmy4k-MuiTypography-root"
+              >
+                Three
+              </p>
+            </span>
+          </div>
+        </div>
+        <div
+          class="MuiBox-root css-1baulvz"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`AppChipList > should render snapshot correctly 1`] = `
 <DocumentFragment>
   <div

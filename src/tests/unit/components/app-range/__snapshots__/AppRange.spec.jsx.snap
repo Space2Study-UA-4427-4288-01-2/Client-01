@@ -6,43 +6,43 @@ exports[`AppRange > should renders correctly snapshot 1`] = `
     class="MuiStack-root css-16ago1c-MuiStack-root"
   >
     <span
-      class="MuiSlider-root MuiSlider-marked MuiSlider-colorPrimary MuiSlider-sizeSmall css-5yhtxh-MuiSlider-root"
+      class="MuiSlider-root MuiSlider-marked MuiSlider-colorPrimary MuiSlider-sizeSmall css-c5og8r-MuiSlider-root"
     >
       <span
-        class="MuiSlider-rail css-7o8aqz-MuiSlider-rail"
+        class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
       />
       <span
-        class="MuiSlider-track css-nl6333-MuiSlider-track"
+        class="MuiSlider-track css-1n40zqk-MuiSlider-track"
         style="left: 0%; width: 100%;"
       />
       <span
-        class="MuiSlider-mark MuiSlider-markActive css-z5sdnj-MuiSlider-mark"
+        class="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
         data-index="0"
         style="left: 0%;"
       />
       <span
         aria-hidden="true"
-        class="MuiSlider-markLabel MuiSlider-markLabel MuiSlider-markLabelActive css-1ucwjgd-MuiSlider-markLabel"
+        class="MuiSlider-markLabel MuiSlider-markLabel MuiSlider-markLabelActive css-1eoe787-MuiSlider-markLabel"
         data-index="0"
         style="left: 0%;"
       >
         0
       </span>
       <span
-        class="MuiSlider-mark MuiSlider-markActive css-z5sdnj-MuiSlider-mark"
+        class="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
         data-index="1"
         style="left: 100%;"
       />
       <span
         aria-hidden="true"
-        class="MuiSlider-markLabel MuiSlider-markLabel MuiSlider-markLabelActive css-1ucwjgd-MuiSlider-markLabel"
+        class="MuiSlider-markLabel MuiSlider-markLabel MuiSlider-markLabelActive css-1eoe787-MuiSlider-markLabel"
         data-index="1"
         style="left: 100%;"
       >
         100
       </span>
       <span
-        class="MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary css-l29f8w-MuiSlider-thumb"
+        class="MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary css-cv58vo-MuiSlider-thumb"
         data-index="0"
         data-mui-internal-clone-element="true"
         style="left: 0%;"
@@ -62,7 +62,7 @@ exports[`AppRange > should renders correctly snapshot 1`] = `
         />
       </span>
       <span
-        class="MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary css-l29f8w-MuiSlider-thumb"
+        class="MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary css-cv58vo-MuiSlider-thumb"
         data-index="1"
         data-mui-internal-clone-element="true"
         style="left: 100%;"
@@ -110,10 +110,10 @@ exports[`AppRange > should renders correctly snapshot 1`] = `
             />
             <fieldset
               aria-hidden="true"
-              class="MuiOutlinedInput-notchedOutline css-r01yff-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="css-1whs34k-MuiNotchedOutlined-root"
+                class="css-ihdtdm"
               >
                 <span
                   class="notranslate"
@@ -149,10 +149,10 @@ exports[`AppRange > should renders correctly snapshot 1`] = `
             />
             <fieldset
               aria-hidden="true"
-              class="MuiOutlinedInput-notchedOutline css-r01yff-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="css-1whs34k-MuiNotchedOutlined-root"
+                class="css-ihdtdm"
               >
                 <span
                   class="notranslate"

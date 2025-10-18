@@ -16,12 +16,12 @@ exports[`AppContentSwitcher > should render correctly snapshot 1`] = `
       class="MuiSwitch-root MuiSwitch-sizeMedium css-1mmi41l-MuiSwitch-root"
     >
       <span
-        class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1wh25oe-MuiButtonBase-root-MuiSwitchBase-root-MuiSwitch-switchBase"
+        class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
         data-testid="switch"
       >
         <input
           checked=""
-          class="PrivateSwitchBase-input MuiSwitch-input css-1p3z7et-MuiSwitchBase-root"
+          class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
           type="checkbox"
         />
         <span

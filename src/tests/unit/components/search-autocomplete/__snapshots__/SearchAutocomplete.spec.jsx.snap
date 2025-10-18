@@ -17,7 +17,7 @@ exports[`SearchAutocomplete > matches snapshot 1`] = `
       />
     </svg>
     <div
-      class="MuiAutocomplete-root css-1kkuafa-MuiAutocomplete-root"
+      class="MuiAutocomplete-root css-63uuw-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1k5yztr-MuiFormControl-root-MuiTextField-root"
@@ -63,7 +63,7 @@ exports[`SearchAutocomplete > matches snapshot 1`] = `
       />
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-containedLight MuiButton-containedLightPrimary MuiButton-sizeLarge MuiButton-containedLightSizeLarge MuiButton-colorPrimary MuiButton-root MuiButton-containedLight MuiButton-containedLightPrimary MuiButton-sizeLarge MuiButton-containedLightSizeLarge MuiButton-colorPrimary css-1kmzz67-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-containedLight MuiButton-containedLightPrimary MuiButton-sizeLarge MuiButton-containedLightSizeLarge MuiButton-root MuiButton-containedLight MuiButton-containedLightPrimary MuiButton-sizeLarge MuiButton-containedLightSizeLarge css-1kmzz67-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="button"
     >
