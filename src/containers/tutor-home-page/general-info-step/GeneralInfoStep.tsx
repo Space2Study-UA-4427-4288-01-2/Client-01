@@ -1,4 +1,10 @@
-import { ChangeEvent, ReactNode, SyntheticEvent, useCallback } from 'react'
+import {
+  ChangeEvent,
+  ReactNode,
+  SyntheticEvent,
+  useCallback,
+  useEffect
+} from 'react'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
@@ -11,9 +17,11 @@ import CityDropdown from '~/containers/city-dropdown/CityDropdown'
 import CountryDropdown from '~/containers/country-dropdown/CountryDropdown'
 import { useStepContext } from '~/context/step-context'
 import { NameItem } from '~/types'
+import { firstName, lastName } from '~/utils/validations/login'
 
 interface GeneralInfoStepProps {
   btnsBox: ReactNode
+  onValidationChange: (isValid: boolean) => void
 }
 
 interface StepGeneralInfoData {
@@ -24,13 +32,21 @@ interface StepGeneralInfoData {
   professionalSummary: string
 }
 
-const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
+const GeneralInfoStep = ({
+  btnsBox,
+  onValidationChange
+}: GeneralInfoStepProps) => {
   const { t } = useTranslation()
   const { stepData, handleStepData } = useStepContext()
 
   const {
     generalInfo: { data: step }
   } = stepData as { generalInfo: { data: StepGeneralInfoData } }
+
+  useEffect(() => {
+    const isFormValid = !firstName(step.firstName) && !lastName(step.lastName)
+    onValidationChange(isFormValid)
+  }, [step.firstName, step.lastName, onValidationChange])
 
   const setGeneralInfo = useCallback(
     (info: Partial<StepGeneralInfoData>) => {
@@ -72,24 +88,26 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
         autoComplete='off'
         autoFocus
         data-testid='user-first-name'
+        errorMsg={t(firstName(step.firstName) || '')}
         fullWidth
         label={t('common.labels.firstName')}
         onChange={handleChange('firstName')}
         required
         size='medium'
         type='text'
-        value={step.firstName}
+        value={step.firstName.trim()}
       />
       <AppTextField
         autoComplete='off'
         data-testid='user-last-name'
+        errorMsg={t(lastName(step.lastName) || '')}
         fullWidth
         label={t('common.labels.lastName')}
         onChange={handleChange('lastName')}
         required
         size='medium'
         type='text'
-        value={step.lastName}
+        value={step.lastName.trim()}
       />
     </>
   )
@@ -109,7 +127,7 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
     <AppTextArea
       data-testid='user-info'
       fullWidth
-      maxLength={70}
+      maxLength={100}
       onChange={handleChange('professionalSummary')}
       placeholder={t('becomeTutor.generalInfo.textFieldLabel')}
       sx={styles.textArea}
@@ -143,7 +161,6 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
           {infoTextArea()}
           {hintText()}
         </Box>
-
         {btnsBox}
       </Box>
     </Box>
