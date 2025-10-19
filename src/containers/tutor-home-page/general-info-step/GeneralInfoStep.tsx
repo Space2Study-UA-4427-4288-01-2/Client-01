@@ -17,7 +17,7 @@ import CityDropdown from '~/containers/city-dropdown/CityDropdown'
 import CountryDropdown from '~/containers/country-dropdown/CountryDropdown'
 import { useStepContext } from '~/context/step-context'
 import { NameItem } from '~/types'
-import { firstName, lastName } from '~/utils/validations/login'
+import { firstName, lastName } from '~/utils/validations/general-info-step'
 
 interface GeneralInfoStepProps {
   btnsBox: ReactNode
@@ -95,7 +95,7 @@ const GeneralInfoStep = ({
         required
         size='medium'
         type='text'
-        value={step.firstName.trim()}
+        value={step.firstName}
       />
       <AppTextField
         autoComplete='off'
@@ -107,7 +107,7 @@ const GeneralInfoStep = ({
         required
         size='medium'
         type='text'
-        value={step.lastName.trim()}
+        value={step.lastName}
       />
     </>
   )
