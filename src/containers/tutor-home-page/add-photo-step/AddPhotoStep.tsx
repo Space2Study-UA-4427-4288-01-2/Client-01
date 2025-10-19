@@ -9,32 +9,32 @@ import FileUploader from '~/components/file-uploader/FileUploader'
 import { useStepContext } from '~/context/step-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { snackbarVariants } from '~/constants'
+import { validationData } from './constants'
 
 interface AddPhotoStepProps {
   btnsBox: ReactNode
 }
 
-const validationData = {
-  maxFileSize: 1_000_000,
-  maxAllFilesSize: 1_000_000,
-  filesTypes: ['image/jpeg', 'image/png'],
-  fileSizeError: 'becomeTutor.documents.fileSizeError',
-  allFilesSizeError: 'becomeTutor.documents.allFilesSizeError',
-  typeError: 'becomeTutor.documents.typeError',
-  maxQuantityFiles: 1
-}
-
 const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [uploadError, setUploadError] = useState<string>('')
   const [listImages, setListImages] = useState<File[]>([])
   const { handleStepData } = useStepContext()
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
 
+  const showErrorAlert = useCallback(() => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: 'Failed to load file.'
+    })
+  }, [setAlert])
+
   const handleFilesOnLoad = useCallback(
     (photo: string) => {
       setPreviewUrl(photo)
       handleStepData('photo', photo)
+      setUploadError('')
     },
     [handleStepData]
   )
@@ -54,10 +54,7 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
 
       reader.onerror = () => {
         resetPhoto()
-        setAlert({
-          severity: snackbarVariants.error,
-          message: 'Failed to load file.'
-        })
+        showErrorAlert()
       }
       reader.readAsDataURL(files[0])
     } else {
@@ -67,14 +64,22 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   }, [])
 
   const handleOnDrop = useCallback(
-    ({ files }: Emitter) => {
+    ({ files, error }: Emitter) => {
+      if (error) {
+        showErrorAlert()
+        return
+      }
       handleFiles(files)
     },
     [handleFiles]
   )
 
   const onFileUploaded = useCallback(
-    ({ files }: Emitter) => {
+    ({ files, error }: Emitter) => {
+      if (error) {
+        setUploadError(error)
+        return
+      }
       setListImages(() => [...files])
       handleFiles(files)
     },
@@ -115,7 +120,7 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
     <FileUploader
       buttonText={t('becomeTutor.photo.button')}
       emitter={onFileUploaded}
-      initialError={''}
+      initialError={uploadError}
       initialState={listImages}
       isImages
       sx={style.fileUploader}
