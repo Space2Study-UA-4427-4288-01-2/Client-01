@@ -23,7 +23,7 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
 
-  const showErrorAlert = useCallback(() => {
+  const showErrorNotification = useCallback(() => {
     setAlert({
       severity: snackbarVariants.error,
       message: 'Failed to load file.'
@@ -54,7 +54,7 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
 
       reader.onerror = () => {
         resetPhoto()
-        showErrorAlert()
+        showErrorNotification()
       }
       reader.readAsDataURL(files[0])
     } else {
@@ -66,12 +66,12 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   const handleOnDrop = useCallback(
     ({ files, error }: Emitter) => {
       if (error) {
-        showErrorAlert()
+        showErrorNotification()
         return
       }
       handleFiles(files)
     },
-    [handleFiles]
+    [handleFiles, showErrorNotification]
   )
 
   const onFileUploaded = useCallback(
