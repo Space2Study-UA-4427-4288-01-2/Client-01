@@ -68,5 +68,11 @@ describe('StepWrapper test', () => {
     const firstChildren = screen.getByText(/1/i)
 
     expect(firstChildren).toBeInTheDocument()
+
+    const finishBtn = screen.getByText(/Next/i)
+
+    waitFor(() => fireEvent.click(finishBtn))
+
+    expect(vi.fn()).not.toHaveBeenCalled()
   })
 })
