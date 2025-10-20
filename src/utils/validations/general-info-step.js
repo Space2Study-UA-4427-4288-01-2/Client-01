@@ -5,7 +5,6 @@ export const firstName = (value) => {
     if (value.trim().length >= 1 && value.trim().length < 3) {
       return 'common.errorMessages.shortText'
     }
-    console.log(value.trim().length)
     return nameField(value.trim())
   }
 }
