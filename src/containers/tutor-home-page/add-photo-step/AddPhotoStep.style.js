@@ -23,6 +23,7 @@ export const style = {
     pb: { xs: '16px', sm: '26px', md: '52px' }
   },
   previewBox: {
+    boxSizing: 'border-box',
     width: '100%',
     height: '100%',
     objectFit: 'cover',
