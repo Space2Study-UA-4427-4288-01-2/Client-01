@@ -39,8 +39,12 @@ const SelectSubject = ({ subject, onSubjectChange }: SelectSubjectProps) => {
   const onCategorySelected = useCallback(
     (_: SyntheticEvent, value: NameItem | null) => {
       setCategory(value)
+      if (!value) {
+        onSubjectChange(_, null)
+        setIsSubjectFetched(false)
+      }
     },
-    []
+    [onSubjectChange]
   )
 
   return (

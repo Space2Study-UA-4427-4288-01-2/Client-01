@@ -21,7 +21,7 @@ const SubjectsStep: FC<SubjectsStepProps> = ({ btnsBox }) => {
   const { stepData, handleStepData } = useStepContext()
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null)
 
-  const formHeader = () => (
+  const formHeader = (
     <Typography gutterBottom variant={TypographyVariantEnum.Body1}>
       {t('becomeTutor.categories.title')}
     </Typography>
@@ -63,7 +63,7 @@ const SubjectsStep: FC<SubjectsStepProps> = ({ btnsBox }) => {
       {imgBox}
       <Box sx={styles.rightBox}>
         <Box sx={styles.form}>
-          {formHeader()}
+          {formHeader}
 
           <SelectSubject
             onSubjectChange={onSubjectSeclected}
