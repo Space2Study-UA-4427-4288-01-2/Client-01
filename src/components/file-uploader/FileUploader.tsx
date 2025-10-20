@@ -21,8 +21,8 @@ import {
   InputEnum,
   SizeEnum
 } from '~/types'
+import { MB } from '~/constants/shared'
 
-const MB = 1_000_000
 const TEN = 10
 
 interface FileUploaderProps {
@@ -60,7 +60,7 @@ const FileUploader: FC<FileUploaderProps> = ({
   })
 
   const showMaxNumber = useCallback(() => {
-    const size = validationData?.maxAllFilesSize || validationData.maxFileSize
+    const size = validationData?.maxAllFilesSize ?? validationData.maxFileSize
     return size ? size / MB : TEN
   }, [validationData.maxAllFilesSize, validationData.maxFileSize])
 

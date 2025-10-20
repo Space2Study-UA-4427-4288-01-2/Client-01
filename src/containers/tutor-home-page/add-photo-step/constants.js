@@ -1,4 +1,4 @@
-export const MB = 1_000_000
+import { MB } from '~/constants/shared'
 
 export const validationData = {
   maxFileSize: 10 * MB,
