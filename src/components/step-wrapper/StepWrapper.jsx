@@ -39,6 +39,7 @@ const StepWrapper = ({ children, steps }) => {
 
   const nextButton = isLastStep ? (
     <AppButton
+      disabled={!isFormValid}
       loading={loading}
       onClick={handleSubmit}
       size='small'
@@ -49,7 +50,7 @@ const StepWrapper = ({ children, steps }) => {
     </AppButton>
   ) : (
     <AppButton
-      disabled={!isFormValid}
+      loading={loading}
       onClick={next}
       size='small'
       sx={styles.btn}
