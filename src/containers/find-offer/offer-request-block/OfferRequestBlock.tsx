@@ -4,26 +4,32 @@ import TitleBlock from '~/components/title-block/TitleBlock'
 import icon from '~/assets/img/find-offer/subject_icon.png'
 import AppButton from '~/components/app-button/AppButton'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { useDrawer } from '~/hooks/use-drawer'
 import { translationKey } from '~/containers/find-offer/constants'
+import { useAppSelector } from '~/hooks/use-redux'
+import { UserRoleEnum } from '~/types'
+import { useModalContext } from '~/context/modal-context'
 
 const OfferRequestBlock = () => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
-  const { openDrawer } = useDrawer()
+  const { openModal } = useModalContext()
+  const { userRole } = useAppSelector((state) => state.appMain)
 
-  const handleOpenDrawer = () => {
-    openDrawer()
+  const handleOpenModal = () => {
+    // placeholder for future logic
+    openModal({ component: <>Placeholder</> })
   }
 
   return (
     <TitleBlock img={icon} translationKey={translationKey}>
       <AppButton
         fullWidth={isMobile}
-        onClick={handleOpenDrawer}
+        onClick={handleOpenModal}
         sx={{ py: '14px' }}
       >
-        {t(`${translationKey}.button`)}
+        {t(
+          `${translationKey}.button.${userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student}`
+        )}
       </AppButton>
     </TitleBlock>
   )
