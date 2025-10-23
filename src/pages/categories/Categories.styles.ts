@@ -1,4 +1,11 @@
 export const styles = {
+  navigation: {
+    display: 'flex',
+    flexDirection: 'row-reverse'
+  },
+  searchToolbar: {
+    borderRadius: '70px'
+  },
   titleWithDescription: {
     wrapper: {
       my: '30px',

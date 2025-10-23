@@ -8,6 +8,7 @@ import {
   CategoriesParams,
   ItemsWithCount
 } from '~/types'
+import { categoryMocks } from '~/constants/mocks/categories'
 
 export const categoryService = {
   getCategories: (
@@ -16,6 +17,10 @@ export const categoryService = {
     return axiosClient.get(URLs.categories.get, { params })
   },
   getCategoriesNames: (): Promise<AxiosResponse<CategoryNameInterface[]>> => {
-    return axiosClient.get(URLs.categories.getNames)
+    const categories = categoryMocks.map(({ name, _id }) => ({ name, _id }))
+    return Promise.resolve({
+      data: categories
+    } as AxiosResponse)
+    // return axiosClient.get(URLs.categories.getNames)
   }
 }
