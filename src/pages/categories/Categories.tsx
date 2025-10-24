@@ -57,7 +57,8 @@ const Categories = () => {
   const {
     data: categories,
     loading: categoriesLoading,
-    resetData
+    resetData,
+    loadMore
   } = useLoadMore<CategoryInterface, Pick<CategoryInterface, 'name'>>({
     service: getCategories,
     limit: cardsLimit,
@@ -114,7 +115,7 @@ const Categories = () => {
           loading={categoriesNamesLoading}
           onFocus={() => fetchData()}
           onSearchChange={resetData}
-          options={transform(categoriesNamesItems)}
+          options={transform(categoriesNamesItems ?? [])}
           search={match}
           setSearch={setMatch}
           textFieldProps={{
@@ -132,7 +133,7 @@ const Categories = () => {
         <CardsList
           btnText={t('categoriesPage.viewMore')}
           cards={cards}
-          onClick={() => null}
+          onClick={loadMore}
         />
       )}
     </PageWrapper>
