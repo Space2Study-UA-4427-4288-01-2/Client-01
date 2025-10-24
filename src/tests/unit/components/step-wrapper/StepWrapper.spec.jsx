@@ -32,6 +32,15 @@ describe('StepWrapper test', () => {
     })
   })
 
+  it('should render second children after click on tab', async () => {
+    const secondTab = screen.getByText(/step.stepLabels.language/i)
+
+    fireEvent.click(secondTab)
+    const secondChildren = await screen.findByText(/1/i)
+
+    expect(secondChildren).toBeInTheDocument()
+  })
+
   it('should render finish button', () => {
     let nextBtn = screen.getByText(/Next/i)
 
