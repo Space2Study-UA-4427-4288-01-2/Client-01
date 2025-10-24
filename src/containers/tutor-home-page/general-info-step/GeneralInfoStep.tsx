@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  ReactNode,
-  SyntheticEvent,
-  useCallback,
-  useEffect
-} from 'react'
+import { ChangeEvent, ReactNode, SyntheticEvent, useCallback } from 'react'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
@@ -21,7 +15,6 @@ import { firstName, lastName } from '~/utils/validations/general-info-step'
 
 interface GeneralInfoStepProps {
   btnsBox: ReactNode
-  onValidationChange: (isValid: boolean) => void
 }
 
 interface StepGeneralInfoData {
@@ -32,10 +25,7 @@ interface StepGeneralInfoData {
   professionalSummary: string
 }
 
-const GeneralInfoStep = ({
-  btnsBox,
-  onValidationChange
-}: GeneralInfoStepProps) => {
+const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
   const { t } = useTranslation()
   const { stepData, handleStepData } = useStepContext()
 
@@ -43,18 +33,20 @@ const GeneralInfoStep = ({
     generalInfo: { data: step }
   } = stepData as { generalInfo: { data: StepGeneralInfoData } }
 
-  useEffect(() => {
-    const isFormValid = !firstName(step.firstName) && !lastName(step.lastName)
-    onValidationChange(isFormValid)
-  }, [step.firstName, step.lastName, onValidationChange])
-
   const setGeneralInfo = useCallback(
     (info: Partial<StepGeneralInfoData>) => {
-      handleStepData('generalInfo', {
-        ...info
-      })
+      handleStepData(
+        'generalInfo',
+        {
+          ...info
+        },
+        {
+          firstName: t(firstName(info.firstName) ?? ''),
+          lastName: t(lastName(info.lastName) ?? '')
+        }
+      )
     },
-    [handleStepData]
+    [handleStepData, t]
   )
 
   const handleDropDownChange = useCallback(
@@ -88,7 +80,7 @@ const GeneralInfoStep = ({
         autoComplete='off'
         autoFocus
         data-testid='user-first-name'
-        errorMsg={t(firstName(step.firstName) || '')}
+        errorMsg={stepData.generalInfo.errors?.firstName}
         fullWidth
         label={t('common.labels.firstName')}
         onChange={handleChange('firstName')}
@@ -100,7 +92,7 @@ const GeneralInfoStep = ({
       <AppTextField
         autoComplete='off'
         data-testid='user-last-name'
-        errorMsg={t(lastName(step.lastName) || '')}
+        errorMsg={stepData.generalInfo.errors?.lastName}
         fullWidth
         label={t('common.labels.lastName')}
         onChange={handleChange('lastName')}

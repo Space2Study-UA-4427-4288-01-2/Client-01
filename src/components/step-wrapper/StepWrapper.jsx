@@ -1,4 +1,4 @@
-import { cloneElement, useState } from 'react'
+import { cloneElement } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Container from '@mui/material/Container'
@@ -19,17 +19,15 @@ const StepWrapper = ({ children, steps }) => {
   const { next, back, setActiveStep, handleSubmit } = stepOperation
   const { t } = useTranslation()
 
-  const [isFormValid, setIsFormValid] = useState(false)
-
-  const handleValidationChange = (isValid) => {
-    setIsFormValid(isValid)
+  const handleTabClick = (index) => {
+    !stepErrors[activeStep] && setActiveStep(index)
   }
 
   const stepLabels = steps.map((step, index) => (
     <Box
       color={stepErrors[index] ? 'error.500' : 'primary.500'}
       key={step}
-      onClick={() => setActiveStep(index)}
+      onClick={() => handleTabClick(index)}
       sx={[styles.defaultTab, index === activeStep && styles.activeTab]}
       typography='caption'
     >
@@ -39,7 +37,7 @@ const StepWrapper = ({ children, steps }) => {
 
   const nextButton = isLastStep ? (
     <AppButton
-      disabled={!isFormValid}
+      disabled={stepErrors[activeStep]}
       loading={loading}
       onClick={handleSubmit}
       size='small'
@@ -50,6 +48,7 @@ const StepWrapper = ({ children, steps }) => {
     </AppButton>
   ) : (
     <AppButton
+      disabled={stepErrors[activeStep]}
       loading={loading}
       onClick={next}
       size='small'
@@ -83,8 +82,7 @@ const StepWrapper = ({ children, steps }) => {
       <Box sx={styles.stepContent}>
         {cloneElement(children[activeStep], {
           btnsBox,
-          stepLabel: steps[activeStep],
-          onValidationChange: handleValidationChange
+          stepLabel: steps[activeStep]
         })}
       </Box>
     </Container>

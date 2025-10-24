@@ -3,8 +3,6 @@ import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest'
 import { mockAppTextField } from '~/tests/unit/mocks/AppTextField.mock'
 import { mockAppTextArea } from '~/tests/unit/mocks/AppTextArea.mock'
 
-const mockOnValidationChange = vi.fn()
-
 const { mockHandleStepData } = vi.hoisted(() => ({
   mockHandleStepData: vi.fn()
 }))
@@ -65,10 +63,10 @@ describe('GeneralInfoStep', () => {
     render(
       <GeneralInfoStep
         btnsBox={<div data-testid='btns-box'>Buttons</div>}
-        onValidationChange={mockOnValidationChange}
         {...props}
       />
     )
+
   beforeEach(() => {
     vi.clearAllMocks()
     renderComponent()
@@ -116,7 +114,8 @@ describe('GeneralInfoStep', () => {
       'generalInfo',
       expect.objectContaining({
         firstName: 'Jane'
-      })
+      }),
+      expect.objectContaining({ firstName: '', lastName: '' })
     )
   })
 
@@ -128,7 +127,8 @@ describe('GeneralInfoStep', () => {
       'generalInfo',
       expect.objectContaining({
         lastName: 'Smith'
-      })
+      }),
+      expect.objectContaining({ firstName: '', lastName: '' })
     )
   })
 
@@ -140,7 +140,8 @@ describe('GeneralInfoStep', () => {
       'generalInfo',
       expect.objectContaining({
         professionalSummary: 'New summary'
-      })
+      }),
+      expect.objectContaining({ firstName: '', lastName: '' })
     )
   })
 
@@ -152,7 +153,8 @@ describe('GeneralInfoStep', () => {
       'generalInfo',
       expect.objectContaining({
         country: '10'
-      })
+      }),
+      expect.objectContaining({ firstName: '', lastName: '' })
     )
   })
 
@@ -164,7 +166,8 @@ describe('GeneralInfoStep', () => {
       'generalInfo',
       expect.objectContaining({
         city: '20'
-      })
+      }),
+      expect.objectContaining({ firstName: '', lastName: '' })
     )
   })
 })
