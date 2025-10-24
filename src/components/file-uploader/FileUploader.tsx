@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react'
+import { FC, ReactElement, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -21,6 +21,9 @@ import {
   InputEnum,
   SizeEnum
 } from '~/types'
+import { MB } from '~/constants/shared'
+
+const TEN = 10
 
 interface FileUploaderProps {
   buttonText: string
@@ -56,6 +59,11 @@ const FileUploader: FC<FileUploaderProps> = ({
     validationData
   })
 
+  const showMaxNumber = useCallback(() => {
+    const size = validationData?.maxAllFilesSize ?? validationData.maxFileSize
+    return size ? size / MB : TEN
+  }, [validationData.maxAllFilesSize, validationData.maxFileSize])
+
   const filesList = initialState.map((item: File) => (
     <ListItem key={`${item.name}-${item.lastModified}`} sx={styles.listItem}>
       <Typography sx={styles.fileName}>{item.name}</Typography>
@@ -90,7 +98,7 @@ const FileUploader: FC<FileUploaderProps> = ({
       {isImages && (
         <>
           <Typography sx={styles.fileSize}>
-            {`${t('errorMessages.fileSize', { size: '10' })} ${t(
+            {`${t('errorMessages.fileSize', { size: showMaxNumber() })} ${t(
               'common.megabytes'
             )}`}
           </Typography>

@@ -66,7 +66,7 @@ const useSteps = ({ steps }) => {
       stepData.generalInfo.data
 
     const data = {
-      photo: stepData.photo[0] ? stepData.photo[0] : '',
+      photo: stepData.photo ? stepData.photo : '',
       firstName,
       lastName,
       address: {
