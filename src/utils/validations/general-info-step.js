@@ -1,15 +1,12 @@
 import { nameField } from './common'
 
-export const firstName = (value) => {
-  if (value.trim().length >= 1 && value.trim().length < 3) {
+const userNameValidator = (value) => {
+  const trimmedValue = value.trim()
+  if (trimmedValue.length >= 1 && trimmedValue.length < 3) {
     return 'common.errorMessages.shortText'
   }
-  return nameField(value.trim())
+  return nameField(trimmedValue)
 }
 
-export const lastName = (value) => {
-  if (value.trim().length >= 1 && value.trim().length < 3) {
-    return 'common.errorMessages.shortText'
-  }
-  return nameField(value.trim())
-}
+export const firstName = userNameValidator
+export const lastName = userNameValidator
