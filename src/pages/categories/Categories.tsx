@@ -23,13 +23,13 @@ import useLoadMore from '~/hooks/use-load-more'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { itemsLoadLimit } from '~/constants'
-import { AxiosResponse } from 'axios'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
-import { categoryMocks } from '~/constants/mocks/categories'
 import CardsList from '~/components/cards-list/CardsList'
 import CardWithLink from '~/components/card-with-link/CardWithLink'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { useAppSelector } from '~/hooks/use-redux'
+import { categoryService } from '~/services/category-service'
+
 const CATEGORY_NAME = { name: 'categories' }
 
 const Categories = () => {
@@ -45,14 +45,12 @@ const Categories = () => {
   )
   const cardsLimit = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
-  const getCategories = useCallback(() => {
-    return Promise.resolve({
-      data: {
-        items: [...categoryMocks],
-        count: 10
-      }
-    } as AxiosResponse)
-  }, [])
+  const getCategories = useCallback(
+    (data?: Pick<CategoryInterface, 'name'>) => {
+      return categoryService.getCategoriesMock(data)
+    },
+    []
+  )
 
   const {
     data: categories,
@@ -133,6 +131,8 @@ const Categories = () => {
         <CardsList
           btnText={t('categoriesPage.viewMore')}
           cards={cards}
+          isExpandable
+          loading={categoriesLoading}
           onClick={loadMore}
         />
       )}

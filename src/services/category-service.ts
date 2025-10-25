@@ -22,5 +22,20 @@ export const categoryService = {
       data: categories
     } as AxiosResponse)
     // return axiosClient.get(URLs.categories.getNames)
+  },
+  getCategoriesMock: (params?: Partial<CategoriesParams>) => {
+    let items = [...categoryMocks]
+
+    if (params?.name) {
+      const search = params.name.toLowerCase()
+      items = items.filter((item) => item.name.toLowerCase().includes(search))
+    }
+
+    return Promise.resolve({
+      data: {
+        items,
+        count: items.length
+      }
+    } as AxiosResponse)
   }
 }
