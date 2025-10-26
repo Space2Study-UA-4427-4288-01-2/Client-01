@@ -29,6 +29,8 @@ import CardWithLink from '~/components/card-with-link/CardWithLink'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { useAppSelector } from '~/hooks/use-redux'
 import { categoryService } from '~/services/category-service'
+import { LazyDynamicIcon } from '~/components/lazy-icon/LazyIcon'
+import { alpha } from '@mui/material/styles'
 
 const CATEGORY_NAME = { name: 'categories' }
 
@@ -87,7 +89,21 @@ const Categories = () => {
           key={item._id}
           link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
           title={item.name}
-        />
+        >
+          {item.appearance.icon ? (
+            <Box
+              sx={{
+                ...styles.icon.box,
+                backgroundColor: alpha(item.appearance.color, 0.3)
+              }}
+            >
+              <LazyDynamicIcon
+                color={item.appearance.color}
+                name={item.appearance.icon}
+              />
+            </Box>
+          ) : null}
+        </CardWithLink>
       )
     })
   }, [categories, t, userRole])

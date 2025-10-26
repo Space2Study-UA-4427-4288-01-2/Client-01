@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import Box from '@mui/material/Box'
 
 import AppCard from '~/components/app-card/AppCard'
@@ -11,17 +11,23 @@ interface CardWithLinkProps {
   title: string
   description: string
   link: string
+  children?: ReactNode
 }
 
 const CardWithLink: FC<CardWithLinkProps> = ({
+  children,
   img,
   title,
   description,
   link
 }) => {
+  const icon = (
+    <Box alt='item image' component='img' src={img} sx={styles.img} />
+  )
+
   return (
     <AppCard link={link}>
-      <Box alt='item image' component='img' src={img} sx={styles.img} />
+      {children ?? icon}
       <TitleWithDescription
         description={description}
         style={styles.titleWithDescription}

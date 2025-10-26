@@ -18,5 +18,18 @@ export const styles = {
       typography: { sm: 'body1', xs: 'body2' },
       color: 'primary.500'
     }
+  },
+  icon: {
+    box: {
+      maxWidth: '62px',
+      maxHeight: '62px',
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: '5px',
+      mr: '20px'
+    },
+    svg: { width: '100%', height: '100%' }
   }
 }
