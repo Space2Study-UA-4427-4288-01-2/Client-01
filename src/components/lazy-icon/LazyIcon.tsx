@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useMemo } from 'react'
 import { CircularProgress, Box, SxProps, Theme } from '@mui/material'
 import { SvgIconComponent } from '@mui/icons-material'
 
@@ -15,7 +15,7 @@ const icons: Record<
 }
 
 interface LazyDynamicIconProps {
-  name: IconName | string
+  name: IconName
   size?: number
   color?: string
   sx?: SxProps<Theme>
@@ -27,8 +27,10 @@ export const LazyDynamicIcon = ({
   color,
   sx
 }: LazyDynamicIconProps) => {
-  const loader = icons[name ?? 'HelpOutline']
-  const IconComponent = lazy(loader)
+  const IconComponent = useMemo(() => {
+    const loader = icons[name as IconName] ?? icons.HelpOutline
+    return lazy(loader)
+  }, [name])
 
   return (
     <Suspense fallback={<CircularProgress size={20} />}>
