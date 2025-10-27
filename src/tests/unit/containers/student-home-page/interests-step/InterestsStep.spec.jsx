@@ -21,9 +21,14 @@ vi.mock('~/services/subject-service', () => ({
   }
 }))
 
+const mockStepData = {
+  generalInfo: {},
+  interests: ['Math']
+}
+
 vi.mock('~/context/step-context', () => ({
   useStepContext: () => ({
-    stepData: { interests: ['Math'] },
+    stepData: mockStepData,
     handleStepData: mockHandleStepData
   })
 }))
@@ -84,6 +89,7 @@ describe('InterestsStep', () => {
   it('adds new interest when button clicked after selection', () => {
     fireEvent.click(screen.getByTestId('select-subject'))
     fireEvent.click(screen.getByText(/student\.interests\.addBtn/i))
+
     expect(mockHandleStepData).toHaveBeenCalledWith(
       'interests',
       expect.arrayContaining(['Math', 'Biology'])

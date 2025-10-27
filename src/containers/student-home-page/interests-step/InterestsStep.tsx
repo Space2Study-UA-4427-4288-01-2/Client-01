@@ -21,16 +21,17 @@ const InterestsStep: FC<InterestsStepProps> = ({ btnsBox }) => {
   const { t } = useTranslation()
   const { stepData, handleStepData } = useStepContext()
 
+  const stepLabel = Object.keys(stepData)[1] // 2-й крок — interests
+  const interests = stepData[stepLabel] || []
+
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null)
 
   const handleAddSubject = useCallback(() => {
-    if (selectedSubject) {
-      handleStepData('interests', [
-        ...new Set([...stepData.interests, selectedSubject])
-      ])
-      setSelectedSubject(null)
-    }
-  }, [selectedSubject, handleStepData, stepData])
+    if (!selectedSubject) return
+
+    handleStepData(stepLabel, [...new Set([...interests, selectedSubject])])
+    setSelectedSubject(null)
+  }, [selectedSubject, interests, stepLabel, handleStepData])
 
   const onSubjectSelected = useCallback(
     (_: SyntheticEvent, value: NameItem | null) => {

@@ -12,8 +12,7 @@ import LanguageStep from '~/containers/tutor-home-page/language-step/LanguageSte
 import InterestsStep from '~/containers/student-home-page/interests-step/InterestsStep'
 
 import {
-  tutorStepLabels,
-  studentStepLabels,
+  getLabelsByRole,
   initialValues
 } from '~/components/user-steps-wrapper/constants'
 import { UserResponse, UserRole } from '~/types'
@@ -59,8 +58,7 @@ const UserStepsWrapper: FC<UserStepsWrapperProps> = ({ userRole, userId }) => {
     <AddPhotoStep key='4' />
   ]
 
-  const stepLabels =
-    userRole === 'student' ? studentStepLabels : tutorStepLabels
+  const stepLabels = getLabelsByRole(userRole === 'tutor')
 
   return (
     <StepProvider
