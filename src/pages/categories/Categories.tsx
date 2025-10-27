@@ -71,6 +71,22 @@ const Categories = () => {
     fetchData
   } = useCategoriesNames({ fetchOnMount: false })
 
+  const toolbar = (
+    <AppToolbar sx={styles.searchToolbar}>
+      <SearchAutocomplete
+        loading={categoriesNamesLoading}
+        onFocus={() => fetchData()}
+        onSearchChange={resetData}
+        options={transform(categoriesNamesItems ?? [])}
+        search={match}
+        setSearch={setMatch}
+        textFieldProps={{
+          label: t('categoriesPage.searchLabel')
+        }}
+      />
+    </AppToolbar>
+  )
+
   const cards = useMemo(() => {
     const uniqueCategories = Array.from(
       new Map(categories.map((item) => [item.name, item])).values()
@@ -82,6 +98,20 @@ const Categories = () => {
           userRole as UserRoleEnum.Student | UserRoleEnum.Tutor
         ] ?? 0
 
+      const icon = item.appearance.icon ? (
+        <Box
+          sx={{
+            ...styles.icon.box,
+            backgroundColor: alpha(item.appearance.color, 0.3)
+          }}
+        >
+          <LazyDynamicIcon
+            color={item.appearance.color}
+            name={item.appearance.icon}
+          />
+        </Box>
+      ) : null
+
       return (
         <CardWithLink
           description={`${offerCount} ${t('categoriesPage.offers')}`}
@@ -90,23 +120,27 @@ const Categories = () => {
           link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
           title={item.name}
         >
-          {item.appearance.icon ? (
-            <Box
-              sx={{
-                ...styles.icon.box,
-                backgroundColor: alpha(item.appearance.color, 0.3)
-              }}
-            >
-              <LazyDynamicIcon
-                color={item.appearance.color}
-                name={item.appearance.icon}
-              />
-            </Box>
-          ) : null}
+          {icon}
         </CardWithLink>
       )
     })
   }, [categories, t, userRole])
+
+  const cardList =
+    !categories.length && !categoriesLoading ? (
+      <NotFoundResults
+        buttonText={t('errorMessages.buttonRequest', CATEGORY_NAME)}
+        description={t('errorMessages.tryAgainText', CATEGORY_NAME)}
+      />
+    ) : (
+      <CardsList
+        btnText={t('categoriesPage.viewMore')}
+        cards={cards}
+        isExpandable
+        loading={categoriesLoading}
+        onClick={loadMore}
+      />
+    )
 
   return (
     <PageWrapper>
@@ -124,34 +158,10 @@ const Categories = () => {
           title={t('categoriesPage.showAllOffers')}
         />
       </Box>
-      <AppToolbar sx={styles.searchToolbar}>
-        <SearchAutocomplete
-          loading={categoriesNamesLoading}
-          onFocus={() => fetchData()}
-          onSearchChange={resetData}
-          options={transform(categoriesNamesItems ?? [])}
-          search={match}
-          setSearch={setMatch}
-          textFieldProps={{
-            label: t('categoriesPage.searchLabel')
-          }}
-        />
-      </AppToolbar>
 
-      {!categories.length && !categoriesLoading ? (
-        <NotFoundResults
-          buttonText={t('errorMessages.buttonRequest', CATEGORY_NAME)}
-          description={t('errorMessages.tryAgainText', CATEGORY_NAME)}
-        />
-      ) : (
-        <CardsList
-          btnText={t('categoriesPage.viewMore')}
-          cards={cards}
-          isExpandable
-          loading={categoriesLoading}
-          onClick={loadMore}
-        />
-      )}
+      {toolbar}
+
+      {cardList}
     </PageWrapper>
   )
 }

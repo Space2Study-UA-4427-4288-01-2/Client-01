@@ -15,7 +15,7 @@ const icons: Record<
 }
 
 interface LazyDynamicIconProps {
-  name: IconName
+  name: string
   size?: number
   color?: string
   sx?: SxProps<Theme>
@@ -28,7 +28,7 @@ export const LazyDynamicIcon = ({
   sx
 }: LazyDynamicIconProps) => {
   const IconComponent = useMemo(() => {
-    const loader = icons[name as IconName] ?? icons.HelpOutline
+    const loader = icons[name] ?? icons.HelpOutline
     return lazy(loader)
   }, [name])
 
