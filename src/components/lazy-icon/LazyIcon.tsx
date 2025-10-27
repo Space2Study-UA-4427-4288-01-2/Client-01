@@ -1,13 +1,9 @@
 import { lazy, Suspense, useMemo } from 'react'
 import { CircularProgress, Box, SxProps, Theme } from '@mui/material'
 import { SvgIconComponent } from '@mui/icons-material'
+import { IconName } from '~/types'
 
-type IconName = 'Language' | 'Photo' | 'HelpOutline' | 'Grid3x3'
-
-const icons: Record<
-  IconName | string,
-  () => Promise<{ default: SvgIconComponent }>
-> = {
+const icons: Record<IconName, () => Promise<{ default: SvgIconComponent }>> = {
   Language: () => import('@mui/icons-material/Language'),
   Photo: () => import('@mui/icons-material/Photo'),
   HelpOutline: () => import('@mui/icons-material/HelpOutline'),
@@ -28,7 +24,7 @@ export const LazyDynamicIcon = ({
   sx
 }: LazyDynamicIconProps) => {
   const IconComponent = useMemo(() => {
-    const loader = icons[name] ?? icons.HelpOutline
+    const loader = icons[name as IconName] ?? icons.HelpOutline
     return lazy(loader)
   }, [name])
 

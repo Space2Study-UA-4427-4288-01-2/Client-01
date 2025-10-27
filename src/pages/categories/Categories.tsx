@@ -12,6 +12,7 @@ import { styles } from '~/pages/categories/Categories.styles'
 import {
   CategoryInterface,
   CategoryNameInterface,
+  IconName,
   SizeEnum,
   UserRoleEnum
 } from '~/types'
@@ -107,7 +108,7 @@ const Categories = () => {
         >
           <LazyDynamicIcon
             color={item.appearance.color}
-            name={item.appearance.icon}
+            name={item.appearance.icon as IconName}
           />
         </Box>
       ) : null
