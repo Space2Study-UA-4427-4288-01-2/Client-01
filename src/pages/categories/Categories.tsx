@@ -30,7 +30,7 @@ import CardWithLink from '~/components/card-with-link/CardWithLink'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { useAppSelector } from '~/hooks/use-redux'
 import { categoryService } from '~/services/category-service'
-import { LazyDynamicIcon } from '~/components/lazy-icon/LazyIcon'
+import { LazyIcon } from '~/components/lazy-icon/LazyIcon'
 import { alpha } from '@mui/material/styles'
 
 const CATEGORY_NAME = { name: 'categories' }
@@ -106,7 +106,7 @@ const Categories = () => {
             backgroundColor: alpha(item.appearance.color, 0.3)
           }}
         >
-          <LazyDynamicIcon
+          <LazyIcon
             color={item.appearance.color}
             name={item.appearance.icon as IconName}
           />

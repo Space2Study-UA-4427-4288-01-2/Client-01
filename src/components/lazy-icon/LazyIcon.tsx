@@ -10,19 +10,14 @@ const icons: Record<IconName, () => Promise<{ default: SvgIconComponent }>> = {
   Grid3x3: () => import('@mui/icons-material/Grid3x3')
 }
 
-interface LazyDynamicIconProps {
+interface LazyIconProps {
   name: string
   size?: number
   color?: string
   sx?: SxProps<Theme>
 }
 
-export const LazyDynamicIcon = ({
-  name,
-  size = 48,
-  color,
-  sx
-}: LazyDynamicIconProps) => {
+export const LazyIcon = ({ name, size = 48, color, sx }: LazyIconProps) => {
   const IconComponent = useMemo(() => {
     const loader = icons[name as IconName] ?? icons.HelpOutline
     return lazy(loader)
@@ -32,6 +27,7 @@ export const LazyDynamicIcon = ({
     <Suspense fallback={<CircularProgress size={20} />}>
       <Box
         component={IconComponent}
+        data-testid='icon-box'
         sx={{
           fontSize: size,
           color,
