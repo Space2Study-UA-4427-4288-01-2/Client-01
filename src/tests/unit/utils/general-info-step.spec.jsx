@@ -3,7 +3,7 @@ import { expect } from 'vitest'
 
 describe('General Info Step Validations', () => {
   describe('firstName validation', () => {
-    it('Should return undefined for valid names', () => {
+    it('Should return empty string for valid names', () => {
       expect(firstName('John')).toBe('')
       expect(firstName('Mary')).toBe('')
       expect(firstName('Alexander')).toBe('')
@@ -20,7 +20,7 @@ describe('General Info Step Validations', () => {
     })
   })
   describe('lastName validation', () => {
-    it('Should return undefined for valid names', () => {
+    it('Should return empty string for valid names', () => {
       expect(lastName('Doe')).toBe('')
       expect(lastName('Smith')).toBe('')
       expect(lastName('Anderson')).toBe('')
