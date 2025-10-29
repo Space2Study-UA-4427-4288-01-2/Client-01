@@ -50,7 +50,7 @@ const Categories = () => {
 
   const getCategories = useCallback(
     (data?: Pick<CategoryInterface, 'name'>) => {
-      return categoryService.getCategoriesMock(data)
+      return categoryService.getCategories(data)
     },
     []
   )
