@@ -3,6 +3,12 @@ import { expect } from 'vitest'
 
 describe('General Info Step Validations', () => {
   describe('firstName validation', () => {
+    it('Should return undefined for valid names', () => {
+      expect(firstName('John')).toBe('')
+      expect(firstName('Mary')).toBe('')
+      expect(firstName('Alexander')).toBe('')
+    })
+
     it('Should return error for names shorter than 3 characters', () => {
       const result = firstName('Jo')
       expect(result).toBe('common.errorMessages.shortText')
@@ -14,6 +20,11 @@ describe('General Info Step Validations', () => {
     })
   })
   describe('lastName validation', () => {
+    it('Should return undefined for valid names', () => {
+      expect(lastName('Doe')).toBe('')
+      expect(lastName('Smith')).toBe('')
+      expect(lastName('Anderson')).toBe('')
+    })
     it('Should return error for names shorter than 3 characters', () => {
       const result = lastName('Do')
       expect(result).toBe('common.errorMessages.shortText')
