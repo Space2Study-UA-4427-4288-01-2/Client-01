@@ -31,7 +31,7 @@ export const styles = {
     typography: TypographyVariantEnum.Body2
   },
   error: {
-    color: 'error',
+    color: 'error.700',
     ml: 1,
     typography: TypographyVariantEnum.Caption
   }

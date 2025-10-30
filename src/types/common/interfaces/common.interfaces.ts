@@ -81,3 +81,8 @@ export interface AddDocuments {
   typeError: string
   maxQuantityFiles: number
 }
+
+export interface Emitter {
+  files: File[]
+  error?: string
+}
