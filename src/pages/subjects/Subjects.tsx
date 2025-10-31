@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useEffect } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import Box from '@mui/material/Box'
@@ -75,7 +75,7 @@ const Subjects = () => {
 
   const getSubjects = useCallback(
     (data?: Pick<SubjectInterface, 'name'>) =>
-      subjectService.getSubjects(data, categoryId ?? undefined),
+      subjectService.getSubjects(data, categoryId || undefined),
     [categoryId]
   )
 
@@ -140,10 +140,6 @@ const Subjects = () => {
   )
 
   const handleOpenModal = () => openModal({ component: <CreateSubjectModal /> })
-
-  useEffect(() => {
-    console.log('🔍 categoryId:', categoryId)
-  }, [categoryId])
 
   return (
     <PageWrapper>
