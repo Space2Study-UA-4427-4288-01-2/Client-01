@@ -5,7 +5,10 @@
       "student": "Tutor for private lessons"
     },
     "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    "button": "Create request"
+    "button": {
+      "tutor": "Create offer",
+      "student": "Create request"
+    }
   },
   "titleWithDescription": {
     "title": "Explore Offers",

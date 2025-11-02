@@ -24,3 +24,5 @@ export type Sort = {
   order: SortEnum
   orderBy: string
 }
+
+export type IconName = 'Language' | 'Photo' | 'HelpOutline' | 'Grid3x3'
