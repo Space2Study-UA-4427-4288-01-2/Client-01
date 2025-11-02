@@ -8,6 +8,7 @@ import { translationKey } from '~/containers/find-offer/constants'
 import { useAppSelector } from '~/hooks/use-redux'
 import { UserRoleEnum } from '~/types'
 import { useModalContext } from '~/context/modal-context'
+import CreateOffer from '~/containers/create-offer/CreateOffer'
 
 const OfferRequestBlock = () => {
   const { t } = useTranslation()
@@ -16,8 +17,13 @@ const OfferRequestBlock = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
   const handleOpenModal = () => {
-    // placeholder for future logic
-    openModal({ component: <>Placeholder</> })
+    const modal =
+      userRole === UserRoleEnum.Tutor ? (
+        <CreateOffer />
+      ) : (
+        <h1>Create request</h1>
+      )
+    openModal({ component: modal })
   }
 
   return (
