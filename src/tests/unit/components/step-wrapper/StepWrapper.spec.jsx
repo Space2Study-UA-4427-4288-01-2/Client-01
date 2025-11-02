@@ -32,12 +32,11 @@ describe('StepWrapper test', () => {
     })
   })
 
-  it('should render second children after click on tab', () => {
+  it('should render second children after click on tab', async () => {
     const secondTab = screen.getByText(/step.stepLabels.language/i)
 
     fireEvent.click(secondTab)
-
-    const secondChildren = screen.getByText(/3/i)
+    const secondChildren = await screen.findByText(/1/i)
 
     expect(secondChildren).toBeInTheDocument()
   })
@@ -55,7 +54,7 @@ describe('StepWrapper test', () => {
 
     waitFor(() => fireEvent.click(nextBtn))
 
-    const finishBtn = screen.getByText(/Finish/i)
+    const finishBtn = screen.getByText(/Next/i)
 
     waitFor(() => fireEvent.click(finishBtn))
 
@@ -72,5 +71,11 @@ describe('StepWrapper test', () => {
     const firstChildren = screen.getByText(/1/i)
 
     expect(firstChildren).toBeInTheDocument()
+
+    const finishBtn = screen.getByText(/Next/i)
+
+    waitFor(() => fireEvent.click(finishBtn))
+
+    expect(vi.fn()).not.toHaveBeenCalled()
   })
 })

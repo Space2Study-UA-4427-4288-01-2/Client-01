@@ -11,6 +11,7 @@ import CityDropdown from '~/containers/city-dropdown/CityDropdown'
 import CountryDropdown from '~/containers/country-dropdown/CountryDropdown'
 import { useStepContext } from '~/context/step-context'
 import { NameItem } from '~/types'
+import { firstName, lastName } from '~/utils/validations/general-info-step'
 
 interface GeneralInfoStepProps {
   btnsBox: ReactNode
@@ -34,11 +35,18 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
 
   const setGeneralInfo = useCallback(
     (info: Partial<StepGeneralInfoData>) => {
-      handleStepData('generalInfo', {
-        ...info
-      })
+      handleStepData(
+        'generalInfo',
+        {
+          ...info
+        },
+        {
+          firstName: t(firstName(info.firstName) ?? ''),
+          lastName: t(lastName(info.lastName) ?? '')
+        }
+      )
     },
-    [handleStepData]
+    [handleStepData, t]
   )
 
   const handleDropDownChange = useCallback(
@@ -72,6 +80,7 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
         autoComplete='off'
         autoFocus
         data-testid='user-first-name'
+        errorMsg={stepData.generalInfo.errors?.firstName}
         fullWidth
         label={t('common.labels.firstName')}
         onChange={handleChange('firstName')}
@@ -83,6 +92,7 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
       <AppTextField
         autoComplete='off'
         data-testid='user-last-name'
+        errorMsg={stepData.generalInfo.errors?.lastName}
         fullWidth
         label={t('common.labels.lastName')}
         onChange={handleChange('lastName')}
@@ -109,7 +119,7 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
     <AppTextArea
       data-testid='user-info'
       fullWidth
-      maxLength={70}
+      maxLength={100}
       onChange={handleChange('professionalSummary')}
       placeholder={t('becomeTutor.generalInfo.textFieldLabel')}
       sx={styles.textArea}
@@ -143,7 +153,6 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
           {infoTextArea()}
           {hintText()}
         </Box>
-
         {btnsBox}
       </Box>
     </Box>

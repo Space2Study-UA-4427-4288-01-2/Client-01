@@ -19,11 +19,15 @@ const StepWrapper = ({ children, steps }) => {
   const { next, back, setActiveStep, handleSubmit } = stepOperation
   const { t } = useTranslation()
 
+  const handleTabClick = (index) => {
+    !stepErrors[activeStep] && setActiveStep(index)
+  }
+
   const stepLabels = steps.map((step, index) => (
     <Box
       color={stepErrors[index] ? 'error.500' : 'primary.500'}
       key={step}
-      onClick={() => setActiveStep(index)}
+      onClick={() => handleTabClick(index)}
       sx={[styles.defaultTab, index === activeStep && styles.activeTab]}
       typography='caption'
     >
@@ -33,6 +37,7 @@ const StepWrapper = ({ children, steps }) => {
 
   const nextButton = isLastStep ? (
     <AppButton
+      disabled={stepErrors[activeStep]}
       loading={loading}
       onClick={handleSubmit}
       size='small'
@@ -42,7 +47,14 @@ const StepWrapper = ({ children, steps }) => {
       {t('common.finish')}
     </AppButton>
   ) : (
-    <AppButton onClick={next} size='small' sx={styles.btn} variant='contained'>
+    <AppButton
+      disabled={stepErrors[activeStep]}
+      loading={loading}
+      onClick={next}
+      size='small'
+      sx={styles.btn}
+      variant='contained'
+    >
       {t('common.next')}
       <EastIcon fontSize='small' />
     </AppButton>

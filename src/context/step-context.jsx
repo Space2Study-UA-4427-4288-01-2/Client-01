@@ -6,9 +6,13 @@ import {
   useEffect
 } from 'react'
 
+import { useTranslation } from 'react-i18next'
+import { firstName, lastName } from '~/utils/validations/general-info-step'
+
 const StepContext = createContext()
 
 const StepProvider = ({ children, initialValues, stepLabels }) => {
+  const { t } = useTranslation()
   const [generalData, setGeneralData] = useState({
     data: initialValues,
     errors: {}
@@ -30,10 +34,13 @@ const StepProvider = ({ children, initialValues, stepLabels }) => {
         country: user.address?.country,
         professionalSummary: user.professionalSummary
       },
-      errors: {}
+      errors: {
+        firstName: t(firstName(user.firstName)),
+        lastName: t(lastName(user.lastName))
+      }
     })
     setLanguage(user.nativeLanguage || 'Ukrainian')
-  }, [initialValues])
+  }, [initialValues, t])
 
   const stepData = {
     [generalLabel]: generalData,
@@ -48,7 +55,7 @@ const StepProvider = ({ children, initialValues, stepLabels }) => {
         case generalLabel:
           setGeneralData((prev) => ({
             data: { ...prev.data, ...data },
-            errors
+            errors: { ...prev.errors, ...errors }
           }))
           break
         case subjectLabel:
