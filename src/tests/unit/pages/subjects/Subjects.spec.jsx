@@ -3,6 +3,46 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { renderWithProviders } from '~tests/test-utils'
 import Subjects from '~/pages/subjects/Subjects'
 
+vi.mock('~/hooks/use-axios', () => ({
+  __esModule: true,
+  default: () => ({
+    loading: false,
+    response: [],
+    fetchData: vi.fn()
+  })
+}))
+
+vi.mock('~/services/subject-service', () => ({
+  subjectService: {
+    getSubjects: vi.fn().mockResolvedValue({
+      data: {
+        items: [],
+        count: 0
+      }
+    }),
+    getSubjectsNames: vi.fn().mockResolvedValue({
+      data: {
+        data: []
+      }
+    })
+  }
+}))
+
+vi.mock('~/services/category-service', () => ({
+  categoryService: {
+    getCategoriesNames: vi.fn().mockResolvedValue([])
+  }
+}))
+
+vi.mock('~/hooks/use-subjects-names', () => ({
+  __esModule: true,
+  default: () => ({
+    loading: false,
+    response: [],
+    fetchData: vi.fn()
+  })
+}))
+
 describe('Subjects component', () => {
   const secondLoginState = {
     appMain: { isFirstLogin: false, userRole: 'student', userId: '1' }
