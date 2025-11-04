@@ -20,6 +20,12 @@ import {
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
+const categoriesMock = [
+  { _id: '1', name: 'Science' },
+  { _id: '2', name: 'Art' },
+  { _id: '3', name: 'Technology' }
+]
+
 export const ResourceService = {
   getQuestions: (
     params?: GetResourcesParams
@@ -48,6 +54,11 @@ export const ResourceService = {
   getResourcesCategoriesNames: (): Promise<
     AxiosResponse<CategoryNameInterface[]>
   > => axiosClient.get(URLs.resources.resourcesCategories.getNames),
+  getResourcesCategoriesNamesMock: (): Promise<
+    AxiosResponse<CategoryNameInterface[]>
+  > => {
+    return Promise.resolve({ data: categoriesMock } as AxiosResponse)
+  },
   createResourceCategory: async (
     params?: CreateCategoriesParams
   ): Promise<AxiosResponse<Categories>> =>

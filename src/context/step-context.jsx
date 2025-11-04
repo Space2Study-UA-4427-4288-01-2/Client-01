@@ -20,7 +20,8 @@ const StepProvider = ({ children, initialValues, stepLabels }) => {
   const [subject, setSubject] = useState([])
   const [language, setLanguage] = useState(null)
   const [photo, setPhoto] = useState(null)
-  const [generalLabel, subjectLabel, languageLabel, photoLabel] = stepLabels
+  const [generalLabel, subjectOrInterestsLabel, languageLabel, photoLabel] =
+    stepLabels
 
   useEffect(() => {
     const user = initialValues
@@ -44,7 +45,7 @@ const StepProvider = ({ children, initialValues, stepLabels }) => {
 
   const stepData = {
     [generalLabel]: generalData,
-    [subjectLabel]: subject,
+    [subjectOrInterestsLabel]: subject,
     [languageLabel]: language,
     [photoLabel]: photo
   }
@@ -58,7 +59,7 @@ const StepProvider = ({ children, initialValues, stepLabels }) => {
             errors: { ...prev.errors, ...errors }
           }))
           break
-        case subjectLabel:
+        case subjectOrInterestsLabel:
           setSubject(data)
           break
         case languageLabel:
@@ -71,7 +72,7 @@ const StepProvider = ({ children, initialValues, stepLabels }) => {
           return
       }
     },
-    [generalLabel, subjectLabel, languageLabel, photoLabel]
+    [generalLabel, subjectOrInterestsLabel, languageLabel, photoLabel]
   )
 
   return (

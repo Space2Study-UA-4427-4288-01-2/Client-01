@@ -9,12 +9,12 @@ import GeneralInfoStep from '~/containers/tutor-home-page/general-info-step/Gene
 import AddPhotoStep from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep'
 import SubjectsStep from '~/containers/tutor-home-page/subjects-step/SubjectsStep'
 import LanguageStep from '~/containers/tutor-home-page/language-step/LanguageStep'
+import InterestsStep from '~/containers/student-home-page/interests-step/InterestsStep'
 
 import {
-  tutorStepLabels,
+  getLabelsByRole,
   initialValues
 } from '~/components/user-steps-wrapper/constants'
-import { student } from '~/constants'
 import { UserResponse, UserRole } from '~/types'
 import useAxios from '~/hooks/use-axios'
 import { userService } from '~/services/user-service'
@@ -49,12 +49,16 @@ const UserStepsWrapper: FC<UserStepsWrapperProps> = ({ userRole, userId }) => {
       key='1'
       setIsUserFetched={setIsUserFetched}
     />,
-    <SubjectsStep key='2' />,
+    userRole === 'student' ? (
+      <InterestsStep key='2' />
+    ) : (
+      <SubjectsStep key='2' />
+    ),
     <LanguageStep key='3' />,
     <AddPhotoStep key='4' />
   ]
 
-  const stepLabels = userRole === student ? [''] : tutorStepLabels
+  const stepLabels = getLabelsByRole(userRole === 'tutor')
 
   return (
     <StepProvider

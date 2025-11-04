@@ -14,4 +14,10 @@ export const validations = {
   professionalSummary: textField(0, 200)
 }
 
-export const tutorStepLabels = ['generalInfo', 'subjects', 'language', 'photo']
+export const getLabelsByRole = (isTutor: boolean) => {
+  return `generalInfo ${isTutor ? 'subjects' : 'interests'} language photo`.split(
+    ' '
+  )
+}
+
+export const interestsLabel = 'interests'
