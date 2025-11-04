@@ -3,7 +3,6 @@ import { AxiosResponse } from 'axios'
 
 import { URLs } from '~/constants/request'
 import { ItemsWithCount, SubjectInterface, SubjectNameInterface } from '~/types'
-import { createUrlPath } from '~/utils/helper-functions'
 
 const subjectsMock = [
   {
@@ -29,14 +28,14 @@ export const subjectService = {
     params?: Pick<SubjectInterface, 'name'>,
     categoryId?: string
   ): Promise<AxiosResponse<ItemsWithCount<SubjectInterface>>> => {
-    const category = createUrlPath(URLs.categories.get, categoryId)
-    return axiosClient.get(`${category}${URLs.subjects.get}`, { params })
+    const query = { ...params, categoryId }
+    return axiosClient.get(URLs.subjects.get, { params: query })
   },
+
   getSubjectsNames: (
     categoryId: string | null
   ): Promise<AxiosResponse<SubjectNameInterface[]>> => {
-    const category = createUrlPath(URLs.categories.get, categoryId)
-    return axiosClient.get(`${category}${URLs.subjects.getNames}`)
+    return axiosClient.get(URLs.subjects.getNames, { params: { categoryId } })
   },
   getSubjectsNamesMock: (): Promise<AxiosResponse<SubjectNameInterface[]>> => {
     return Promise.resolve({

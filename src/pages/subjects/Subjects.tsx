@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
-
 import Box from '@mui/material/Box'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -24,11 +23,11 @@ import CreateSubjectModal from '~/containers/find-offer/create-new-subject/Creat
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+
 import useBreakpoints from '~/hooks/use-breakpoints'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 import { mapArrayByField } from '~/utils/map-array-by-field'
-
 import {
   CategoryNameInterface,
   SizeEnum,
@@ -43,15 +42,15 @@ const Subjects = () => {
   const [match, setMatch] = useState<string>('')
   const [categoryName, setCategoryName] = useState<string>('')
   const [isFetched, setIsFetched] = useState<boolean>(false)
-  const params = useMemo(() => ({ name: match }), [match])
 
+  const params = useMemo(() => ({ name: match }), [match])
   const { t } = useTranslation()
   const { userRole } = useAppSelector((state) => state.appMain)
   const breakpoints = useBreakpoints()
   const { openModal } = useModalContext()
   const [searchParams, setSearchParams] = useSearchParams()
-  const categoryId = searchParams.get('categoryId') ?? ''
 
+  const categoryId = searchParams.get('categoryId') || ''
   const cardsLimit = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const transform = useCallback(
@@ -65,18 +64,18 @@ const Subjects = () => {
     fetchData
   } = useSubjectsNames({
     fetchOnMount: false,
-    category: categoryId,
+    category: categoryId || null,
     transform
   })
 
   const getSubjectNames = () => {
-    !isFetched && void fetchData()
+    if (!isFetched) void fetchData()
     setIsFetched(true)
   }
 
   const getSubjects = useCallback(
     (data?: Pick<SubjectInterface, 'name'>) =>
-      subjectService.getSubjects(data, categoryId),
+      subjectService.getSubjects(data, categoryId || undefined),
     [categoryId]
   )
 
@@ -96,19 +95,17 @@ const Subjects = () => {
 
   const cards = useMemo(
     () =>
-      subjects.map((item: SubjectInterface) => {
-        return (
-          <CardWithLink
-            description={`${item.totalOffers[oppositeRole]} ${t(
-              'categoriesPage.offers'
-            )}`}
-            img={serviceIcon}
-            key={item._id}
-            link={`${authRoutes.categories.path}?categoryId=${categoryId}&subjectId=${item._id}`}
-            title={item.name}
-          />
-        )
-      }),
+      subjects.map((item: SubjectInterface) => (
+        <CardWithLink
+          description={`${item.totalOffers?.[oppositeRole] || 0} ${t(
+            'categoriesPage.offers'
+          )}`}
+          img={serviceIcon}
+          key={item._id}
+          link={`${authRoutes.findOffers.path}?categoryId=${categoryId}&subjectId=${item._id}`}
+          title={item.name}
+        />
+      )),
     [subjects, categoryId, oppositeRole, t]
   )
 
@@ -124,8 +121,9 @@ const Subjects = () => {
   }
 
   const onResponseCategory = (response: CategoryNameInterface[]) => {
+    if (!categoryId) return
     const category = response.find((option) => option._id === categoryId)
-    setCategoryName(category?.name ?? '')
+    if (category) setCategoryName(category.name)
   }
 
   const autoCompleteCategories = (
@@ -135,9 +133,7 @@ const Subjects = () => {
       onChange={onCategoryChange}
       service={categoryService.getCategoriesNames}
       sx={styles.categoryInput}
-      textFieldProps={{
-        label: t('breadCrumbs.categories')
-      }}
+      textFieldProps={{ label: t('breadCrumbs.categories') }}
       value={categoryId}
       valueField='_id'
     />
@@ -152,9 +148,7 @@ const Subjects = () => {
       <TitleWithDescription
         description={t('subjectsPage.subjects.description')}
         style={styles.titleWithDescription}
-        title={t('subjectsPage.subjects.title', {
-          category: categoryName
-        })}
+        title={t('subjectsPage.subjects.title', { category: categoryName })}
       />
 
       <Box sx={styles.navigation}>
@@ -165,10 +159,11 @@ const Subjects = () => {
         />
         <DirectionLink
           after={<ArrowForwardIcon fontSize={SizeEnum.Small} />}
-          linkTo={authRoutes.categories.path}
+          linkTo={authRoutes.findOffers.path}
           title={t('subjectsPage.subjects.showAllOffers')}
         />
       </Box>
+
       <AppToolbar sx={styles.searchToolbar}>
         {!breakpoints.isMobile && autoCompleteCategories}
         <SearchAutocomplete
@@ -178,13 +173,13 @@ const Subjects = () => {
           options={subjectsNamesItems}
           search={match}
           setSearch={setMatch}
-          textFieldProps={{
-            label: t('subjectsPage.subjects.searchLabel')
-          }}
+          textFieldProps={{ label: t('subjectsPage.subjects.searchLabel') }}
         />
       </AppToolbar>
+
       {breakpoints.isMobile && autoCompleteCategories}
-      {!subjects.length && !subjectsLoading ? (
+
+      {!subjectsLoading && subjects.length === 0 ? (
         <NotFoundResults
           buttonText={t('errorMessages.buttonRequest', { name: 'subjects' })}
           description={t('errorMessages.tryAgainText', { name: 'subjects' })}
@@ -192,7 +187,7 @@ const Subjects = () => {
         />
       ) : (
         <CardsList
-          btnText={t('categoriesPage.viewMore')}
+          btnText={t('subjectsPage.subjects.viewMore')}
           cards={cards}
           isExpandable={isExpandable}
           loading={subjectsLoading}
