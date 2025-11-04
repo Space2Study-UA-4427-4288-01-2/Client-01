@@ -64,13 +64,13 @@ const CheckboxList = <T extends string>({
     </Typography>
   )
 
-  const helperText = (
+  const helperText = error ? (
     <Tooltip title={error}>
       <Typography sx={styles.error} variant='caption'>
         {error}
       </Typography>
     </Tooltip>
-  )
+  ) : null
 
   return (
     <Box sx={styles.root}>
